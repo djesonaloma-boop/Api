@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>JASON MUSIC</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(
+          circle at top,
+          #172554,
+          #020617 65%
+        );
+      color: white;
+      padding: 20px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .header {
+      text-align: center;
+      padding: 35px 10px;
+    }
+
+    .music-icon {
+      width: 80px;
+      height: 80px;
+      margin: auto;
+      border-radius: 24px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 38px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #7c3aed
+        );
+
+      box-shadow:
+        0 15px 40px
+        rgba(37, 99, 235, .35);
+    }
+
+    h1 {
+      margin-top: 18px;
+      font-size: 34px;
+    }
+
+    .subtitle {
+      color: #94a3b8;
+      margin-top: 8px;
+    }
+
+    .card {
+      background: rgba(15, 23, 42, .95);
+      border: 1px solid #1e293b;
+      border-radius: 24px;
+      padding: 22px;
+
+      box-shadow:
+        0 20px 60px
+        rgba(0, 0, 0, .35);
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 9px;
+      color: #cbd5e1;
+      font-weight: bold;
+    }
+
+    textarea,
+    select,
+    input {
+      width: 100%;
+      padding: 14px;
+
+      border-radius: 13px;
+      border: 1px solid #334155;
+
+      background: #020617;
+      color: white;
+
+      outline: none;
+      font-size: 15px;
+    }
+
+    textarea {
+      height: 140px;
+      resize: vertical;
+    }
+
+    textarea:focus,
+    select:focus,
+    input:focus {
+      border-color: #38bdf8;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .checkbox {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 5px;
+      color: #cbd5e1;
+    }
+
+    .checkbox input {
+      width: 18px;
+      height: 18px;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+
+      border: none;
+      border-radius: 14px;
+
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+
+      cursor: pointer;
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #7c3aed
+        );
+
+      transition: .2s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+    }
+
+    button:disabled {
+      opacity: .55;
+      cursor: wait;
+      transform: none;
+    }
+
+    .status {
+      display: none;
+
+      margin-top: 20px;
+      padding: 15px;
+
+      border-radius: 14px;
+
+      background: #020617;
+      border: 1px solid #1e293b;
+
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    .result {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+
+      border-radius: 18px;
+
+      background: #020617;
+      border: 1px solid #1e293b;
+    }
+
+    .result h2 {
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .download {
+      display: block;
+
+      margin-top: 15px;
+      padding: 13px;
+
+      text-align: center;
+      text-decoration: none;
+
+      border-radius: 12px;
+
+      background: #1e293b;
+      color: white;
+    }
+
+    .error {
+      color: #fca5a5;
+    }
+
+    .success {
+      color: #86efac;
+    }
+
+    .footer {
+      text-align: center;
+      color: #64748b;
+      font-size: 13px;
+      margin-top: 25px;
+      padding-bottom: 20px;
+    }
+
+    @media (max-width: 550px) {
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="app">
+
+    <header class="header">
+
+      <div class="music-icon">
+        🎵
+      </div>
+
+      <h1>JASON MUSIC</h1>
+
+      <p class="subtitle">
+        Création musicale avec IA
+      </p>
+
+    </header>
+
+
+    <section class="card">
+
+      <div class="field">
+
+        <label for="prompt">
+          Décris ta musique
+        </label>
+
+        <textarea
+          id="prompt"
+          placeholder="Exemple : Gospel congolais puissant, piano, guitare, batterie, chœur et ambiance de prière..."
+        ></textarea>
+
+      </div>
+
+
+      <div class="field">
+
+        <label for="lyrics">
+          Paroles — facultatif
+        </label>
+
+        <textarea
+          id="lyrics"
+          placeholder="[Verse]
+Écris ici les paroles...
+
+[Chorus]
+Écris ici le refrain..."
+        ></textarea>
+
+      </div>
+
+
+      <div class="grid">
+
+        <div class="field">
+
+          <label for="duration">
+            Durée
+          </label>
+
+          <select id="duration">
+
+            <option value="30">
+              30 secondes
+            </option>
+
+            <option value="60">
+              1 minute
+            </option>
+
+            <option value="120">
+              2 minutes
+            </option>
+
+            <option value="180">
+              3 minutes
+            </option>
+
+            <option value="300">
+              5 minutes
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="bpm">
+            BPM — facultatif
+          </label>
+
+          <input
+            id="bpm"
+            type="number"
+            min="30"
+            max="300"
+            placeholder="Ex : 100"
+          >
+
+        </div>
+
+      </div>
+
+
+      <div class="field">
+
+        <label for="key">
+          Tonalité — facultatif
+        </label>
+
+        <select id="key">
+
+          <option value="">
+            Automatique
+          </option>
+
+          <option value="C major">
+            C major
+          </option>
+
+          <option value="D major">
+            D major
+          </option>
+
+          <option value="E major">
+            E major
+          </option>
+
+          <option value="F major">
+            F major
+          </option>
+
+          <option value="G major">
+            G major
+          </option>
+
+          <option value="A major">
+            A major
+          </option>
+
+          <option value="B major">
+            B major
+          </option>
+
+          <option value="C minor">
+            C minor
+          </option>
+
+          <option value="D minor">
+            D minor
+          </option>
+
+          <option value="E minor">
+            E minor
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <label class="checkbox">
+
+        <input
+          type="checkbox"
+          id="instrumental"
+        >
+
+        Musique instrumentale uniquement
+
+      </label>
+
+
+      <button
+        id="generateBtn"
+        type="button"
+      >
+        🎵 Générer la musique
+      </button>
+
+
+      <div
+        id="status"
+        class="status"
+      ></div>
+
+
+      <div
+        id="result"
+        class="result"
+      >
+
+        <h2>
+          🎧 Votre musique est prête
+        </h2>
+
+        <audio
+          id="audioPlayer"
+          controls
+        ></audio>
+
+        <a
+          id="downloadBtn"
+          class="download"
+          target="_blank"
+          rel="noopener"
+        >
+          ⬇️ Ouvrir / télécharger
+        </a>
+
+      </div>
+
+    </section>
+
+
+    <div class="footer">
+      JASON MUSIC • Créé par Jason Aloma 🇨🇩
+    </div>
+
+  </div>
+
+
+  <script>
+
+    const generateBtn =
+      document.getElementById("generateBtn");
+
+    const promptInput =
+      document.getElementById("prompt");
+
+    const lyricsInput =
+      document.getElementById("lyrics");
+
+    const durationInput =
+      document.getElementById("duration");
+
+    const bpmInput =
+      document.getElementById("bpm");
+
+    const keyInput =
+      document.getElementById("key");
+
+    const instrumentalInput =
+      document.getElementById("instrumental");
+
+    const statusBox =
+      document.getElementById("status");
+
+    const resultBox =
+      document.getElementById("result");
+
+    const audioPlayer =
+      document.getElementById("audioPlayer");
+
+    const downloadBtn =
+      document.getElementById("downloadBtn");
+
+
+    function showStatus(message, type = "") {
+
+      statusBox.style.display = "block";
+
+      statusBox.className =
+        "status " + type;
+
+      statusBox.textContent = message;
+
+    }
+
+
+    async function apiRequest(data) {
+
+      const response = await fetch(
+        "/api/music",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify(data)
+        }
+      );
+
+      const result =
+        await response.json();
+
+      if (!response.ok) {
+
+        throw new Error(
+          result.error ||
+          "Erreur API."
+        );
+
+      }
+
+      return result;
+
+    }
+
+
+    async function checkMusicStatus(
+      requestId
+    ) {
+
+      while (true) {
+
+        const result =
+          await apiRequest({
+
+            action: "status",
+
+            request_id: requestId
+
+          });
+
+
+        console.log(
+          "JASON MUSIC STATUS:",
+          result
+        );
+
+
+        if (
+          result.status ===
+          "COMPLETED"
+        ) {
+
+          if (!result.audioUrl) {
+
+            throw new Error(
+              "La génération est terminée mais aucun fichier audio n'a été retourné."
+            );
+
+          }
+
+          audioPlayer.src =
+            result.audioUrl;
+
+          downloadBtn.href =
+            result.audioUrl;
+
+          resultBox.style.display =
+            "block";
+
+          showStatus(
+            "✅ Musique générée avec succès !",
+            "success"
+          );
+
+          return;
+
+        }
+
+
+        if (
+          result.status === "FAILED" ||
+          result.status === "ERROR"
+        ) {
+
+          throw new Error(
+            result.error ||
+            "La génération a échoué."
+          );
+
+        }
+
+
+        showStatus(
+          "🎵 Génération en cours... Statut : " +
+          result.status
+        );
+
+
+        /*
+          On attend 5 secondes
+          avant de vérifier à nouveau.
+        */
+
+        await new Promise(
+          resolve =>
+            setTimeout(resolve, 5000)
+        );
+
+      }
+
+    }
+
+
+    generateBtn.addEventListener(
+      "click",
+      async () => {
+
+        const prompt =
+          promptInput.value.trim();
+
+        const lyrics =
+          lyricsInput.value.trim();
+
+        const duration =
+          Number(durationInput.value);
+
+        const bpmValue =
+          bpmInput.value.trim();
+
+        const key =
+          keyInput.value;
+
+        const instrumental =
+          instrumentalInput.checked;
+
+
+        if (!prompt) {
+
+          showStatus(
+            "❌ Écris d'abord une description de la musique.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        generateBtn.disabled =
+          true;
+
+        resultBox.style.display =
+          "none";
+
+        audioPlayer.removeAttribute(
+          "src"
+        );
+
+
+        try {
+
+          showStatus(
+            "🚀 Envoi de la demande à JASON MUSIC..."
+          );
+
+
+          const data = {
+
+            action: "generate",
+
+            prompt: prompt,
+
+            lyrics: lyrics,
+
+            duration: duration,
+
+            instrumental:
+              instrumental,
+
+            time_signature:
+              "4/4"
+
+          };
+
+
+          if (bpmValue) {
+
+            data.bpm =
+              Number(bpmValue);
+
+          }
+
+
+          if (key) {
+
+            data.key =
+              key;
+
+          }
+
+
+          const result =
+            await apiRequest(data);
+
+
+          if (!result.request_id) {
+
+            throw new Error(
+              "Pixazo n'a pas retourné de request_id."
+            );
+
+          }
+
+
+          showStatus(
+            "🎼 Demande acceptée. La musique est en préparation..."
+          );
+
+
+          await checkMusicStatus(
+            result.request_id
+          );
+
+
+        } catch (error) {
+
+          console.error(error);
+
+          showStatus(
+            "❌ " + error.message,
+            "error"
+          );
+
+        } finally {
+
+          generateBtn.disabled =
+            false;
+
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+
+</html>
