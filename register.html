@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Créer un compte - GENESIX</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#0a0a12;color:#fff;min-height:100vh}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:#0f0f1a}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:42px;height:42px;background:#f59e0b;color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900}
+.logo b{font-size:19px}
+.logo span{display:block;font-size:9px;color:#f59e0b;letter-spacing:2px}
+.top-link{padding:9px 14px;border-radius:20px;background:#1e1e2e;color:#fff;text-decoration:none;font-weight:bold;font-size:13px}
+.wrap{padding:28px 18px}
+.card{max-width:420px;margin:18px auto;background:#151524;padding:24px;border-radius:18px}
+.card h2{text-align:center;font-size:22px}
+.card p{text-align:center;color:#b8b8d0;font-size:13px;margin:8px 0 14px}
+input{width:100%;padding:13px;margin:8px 0;border-radius:11px;border:none;background:#22223a;color:#fff;font-size:15px;outline:none}
+button{width:100%;padding:14px;background:#f59e0b;color:#000;border:none;border-radius:12px;font-weight:bold;font-size:16px;cursor:pointer;margin-top:6px}
+.link{color:#f59e0b;text-decoration:none;font-size:13px;display:block;text-align:center;margin-top:12px}
+.back{color:#aaa;text-decoration:none;font-size:13px}
+.note{font-size:12px;color:#888;text-align:center;margin-top:10px;line-height:1.4}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo"><div class="logo-icon">J</div><div><b>GENESIX</b><span>MADE IN KINSHASA</span></div></div>
+  <a class="top-link" href="login.html">Connexion</a>
+</header>
+<div class="wrap">
+  <a class="back" href="index.html">← Retour</a>
+  <div class="card">
+    <h2>Créer un compte ✨</h2>
+    <p>Rejoins GENESIX, c'est gratuit pour toujours 🎉</p>
+    <input id="nom" placeholder="Nom complet">
+    <input id="email" placeholder="Email">
+    <input id="pass" type="password" placeholder="Mot de passe (6 caractères min)">
+    <button id="btn">Créer mon compte</button>
+    <p id="msg" style="color:#ff6b6b;font-size:13px"></p>
+    <p class="note">En créant un compte, tu acceptes les règles de GENESIX. Made in Kinshasa 🇨🇩</p>
+    <a class="link" href="login.html">Déjà un compte ? Se connecter →</a>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+const firebaseConfig = { apiKey:"AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain:"starlink-investit.firebaseapp.com", databaseURL:"https://starlink-investit-default-rtdb.firebaseio.com", projectId:"starlink-investit", storageBucket:"starlink-investit.firebasestorage.app", messagingSenderId:"807081599583", appId:"1:807081599583:web:e00ec3959bc4acdae031ea" };
+const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+const auth = getAuth(app); const db = getDatabase(app);
+document.getElementById("btn").onclick = async () => {
+  if(!nom.value || !email.value || pass.value.length < 6){ msg.textContent="Remplis tout, mot de passe 6 caractères min"; return; }
+  try{
+    const c = await createUserWithEmailAndPassword(auth, email.value, pass.value);
+    await set(ref(db, "genesix/users/"+c.user.uid), { nom: nom.value, email: email.value, createdAt: Date.now() });
+    location.href="Discution.html";
+  }catch(e){ msg.textContent = e.message; }
+};
+</script>
+</body>
+</html>
