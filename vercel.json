@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "/api/[...chemin].js" },
+    { "source": "/api/build", "destination": "/api/build.js" },
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/login", "destination": "/login.html" },
+    { "source": "/register", "destination": "/register.html" },
+    { "source": "/discussions", "destination": "/discussions.html" },
+    { "source": "/chat", "destination": "/chat.html" }
+  ]
+}
