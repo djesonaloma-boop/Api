@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Discussions - GENESIX</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#0a0a12;color:#fff;min-height:100vh}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:#0f0f1a;position:sticky;top:0}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:42px;height:42px;background:#f59e0b;color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900}
+.logo b{font-size:19px}
+.logo span{display:block;font-size:9px;color:#f59e0b;letter-spacing:2px}
+.btn-out{padding:9px 14px;border-radius:20px;background:#ff4444;color:#fff;border:none;font-weight:bold;cursor:pointer}
+.wrap{padding:20px 16px;max-width:600px;margin:0 auto}
+h1{font-size:26px}
+h1 span{color:#f59e0b}
+.sub{color:#b8b8d0;font-size:14px;margin:8px 0 16px}
+.search{display:flex;gap:8px;margin:14px 0}
+.search input{flex:1;padding:12px;border-radius:11px;border:none;background:#22223a;color:#fff;outline:none}
+.search button{padding:12px 16px;background:#7c3aed;color:#fff;border:none;border-radius:11px;font-weight:bold;cursor:pointer}
+.new-box{background:#151524;padding:16px;border-radius:16px;margin:12px 0}
+.new-box input{width:100%;padding:12px;border-radius:11px;border:none;background:#22223a;color:#fff;margin-bottom:10px;outline:none}
+.new-box button{width:100%;padding:13px;background:#f59e0b;color:#000;border:none;border-radius:12px;font-weight:bold;cursor:pointer}
+.disc{display:flex;gap:12px;align-items:center;background:#151524;padding:14px;border-radius:14px;margin:10px 0;text-decoration:none;color:#fff}
+.avatar{width:48px;height:48px;border-radius:50%;background:#7c3aed;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.disc b{font-size:15px}
+.disc p{color:#b8b8d0;font-size:13px;margin-top:3px}
+.time{margin-left:auto;color:#777;font-size:11px}
+.empty{text-align:center;color:#888;padding:30px 10px;line-height:1.5}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#0f0f1a;display:flex;justify-content:space-around;padding:12px 0;border-top:1px solid #222}
+.bottom-nav a{color:#aaa;text-decoration:none;font-size:12px;text-align:center}
+.bottom-nav a.active{color:#f59e0b;font-weight:bold}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo"><div class="logo-icon">J</div><div><b>GENESIX</b><span>MADE IN KINSHASA</span></div></div>
+  <button class="btn-out" id="logout">Déconnexion</button>
+</header>
+
+<div class="wrap">
+  <h1>💬 <span>Discussions</span></h1>
+  <p class="sub" id="hello">Chargement...</p>
+
+  <div class="search">
+    <input id="search" placeholder="🔍 Rechercher une discussion...">
+    <button onclick="document.getElementById('search').value=''">Effacer</button>
+  </div>
+
+  <div class="new-box">
+    <input id="titre" placeholder="✍️ Nouvelle discussion... Ex: Groupe Kinshasa">
+    <button id="creer">+ Créer la discussion</button>
+  </div>
+
+  <div id="liste"></div>
+  <div class="empty" id="empty" style="display:none">Aucune discussion encore.<br>Crée la première 👆</div>
+</div>
+
+<div style="height:70px"></div>
+<div class="bottom-nav">
+  <a href="index.html">🏠<br>Accueil</a>
+  <a class="active" href="Discution.html">💬<br>Discussions</a>
+  <a href="chat.html">💭<br>Chat</a>
+  <a href="login.html">👤<br>Profil</a>
+</div>
+
+<script type="module">
+import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+const firebaseConfig = { apiKey:"AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain:"starlink-investit.firebaseapp.com", databaseURL:"https://starlink-investit-default-rtdb.firebaseio.com", projectId:"starlink-investit", storageBucket:"starlink-investit.firebasestorage.app", messagingSenderId:"807081599583", appId:"1:807081599583:web:e00ec3959bc4acdae031ea" };
+const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+const auth = getAuth(app); const db = getDatabase(app);
+let allDisc = [];
+onAuthStateChanged(auth,(u)=>{ if(!u) location.href="login.html"; else hello.textContent="Salut "+(u.email)+" 👋"; });
+document.getElementById("logout").onclick = async ()=>{ await signOut(auth); location.href="login.html"; };
+document.getElementById("creer").onclick = async ()=>{
+  if(!titre.value.trim()) return;
+  await push(ref(db,"genesix/discussions"),{ titre:titre.value.trim(), createdAt:Date.now(), by:auth.currentUser?.email||"" });
+  titre.value="";
+};
+onValue(ref(db,"genesix/discussions"),(s)=>{
+  const v = s.val()||{};
+  allDisc = Object.entries(v).map(([id,d])=>({id,...d})).reverse();
+  render();
+});
+search.oninput = render;
+function render(){
+  const q = (search.value||"").toLowerCase();
+  const list = allDisc.filter(d=> (d.titre||"").toLowerCase().includes(q));
+  empty.style.display = list.length ? "none" : "block";
+  liste.innerHTML = list.map(d=>`
+    <a class="disc" href="chat.html?id=${d.id}">
+      <div class="avatar">💬</div>
+      <div><b>${d.titre}</b><p>${d.by||"GENESIX"} • Clique pour discuter</p></div>
+      <span class="time">›</span>
+    </a>`).join("");
+}
+</script>
+</body>
+</html>
