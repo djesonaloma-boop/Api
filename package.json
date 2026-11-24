@@ -2,9 +2,12 @@
   "name": "genesix",
   "version": "1.0.0",
   "description": "GENESIX - App comme WhatsApp - Starlink Investit",
-  "main": "backend/server.js",
+  "main": "backend/serveur.js",
   "type": "module",
-  "scripts": { "start": "node backend/server.js", "dev": "node --watch backend/server.js" },
+  "scripts": {
+    "start": "node backend/serveur.js",
+    "dev": "node --watch backend/serveur.js"
+  },
   "dependencies": {
     "express": "^4.19.2",
     "cors": "^2.8.5",
@@ -12,4 +15,4 @@
     "firebase-admin": "^12.5.0",
     "jsonwebtoken": "^9.0.2"
   }
-}
+}\n

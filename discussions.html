@@ -211,23 +211,11 @@ footer strong{color:var(--accent2)}
 
 <!-- FIREBASE GENESIX - starlink-investit -->
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, collection, query, where, orderBy, onSnapshot, getDocs, addDoc, doc, updateDoc, getDoc, increment, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",
-  authDomain: "starlink-investit.firebaseapp.com",
-  databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com",
-  projectId: "starlink-investit",
-  storageBucket: "starlink-investit.firebasestorage.app",
-  messagingSenderId: "807081599583",
-  appId: "1:807081599583:web:e00ec3959bc4acdae031ea"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+import {
+  auth, db, onAuthStateChanged, signOut, collection, query, where,
+  orderBy, onSnapshot, getDocs, addDoc, doc, updateDoc, getDoc,
+  increment, serverTimestamp
+} from "./assets/js/firebase.js";
 
 let myUid = null;
 let myName = "";
@@ -242,7 +230,7 @@ const messagesEl = document.getElementById("messages");
 const msgInput = document.getElementById("msgInput");
 
 onAuthStateChanged(auth, async (user) => {
-  if (!user) return location.href = "login.html";
+  if (!user) return location.replace("./login.html");
   myUid = user.uid;
   // Mon profil -> points + nom
   const snap = await getDoc(doc(db, "users", myUid));

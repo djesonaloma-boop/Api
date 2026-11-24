@@ -188,118 +188,114 @@ footer strong{color:#00d9ff}
 
 <script type="module">
 import {
-  auth,
-  db,
-  createUserWithEmailAndPassword,
-  updateProfile,
-  onAuthStateChanged,
-  ref,
-  set,
-  serverTimestamp
+  auth, db, createUserWithEmailAndPassword, updateProfile, onAuthStateChanged,
+  collection, query, where, getDocs, doc, setDoc, serverTimestamp, getDoc
 } from "./assets/js/firebase.js";
 
-const form=document.getElementById("registerForm");
-const message=document.getElementById("message");
-const btn=document.getElementById("registerBtn");
+const form = document.getElementById("registerForm");
+const message = document.getElementById("message");
+const btn = document.getElementById("registerBtn");
+let submitting = false;
 
-function showMessage(text,type="error"){
-  message.textContent=text;
-  message.className="message "+type;
+function showMessage(text, type = "error") {
+  message.textContent = text;
+  message.className = "message " + type;
 }
 
-onAuthStateChanged(auth,user=>{
-  if(user){
-    window.location.replace("./discussions.html");
+onAuthStateChanged(auth, async user => {
+  if (!user || submitting) return;
+  try {
+    const profile = await getDoc(doc(db, "users", user.uid));
+    if (profile.exists()) window.location.replace("./discussions.html");
+  } catch (error) {
+    showMessage("Impossible de vérifier votre profil. Vérifiez votre connexion puis rechargez la page.");
   }
 });
 
-// Afficher / masquer les mots de passe
-document.querySelectorAll(".eye").forEach(button=>{
-  button.addEventListener("click",()=>{
-    const input=document.getElementById(button.dataset.target);
-    const visible=input.type==="text";
-    input.type=visible?"password":"text";
-    button.textContent=visible?"VOIR":"CACHER";
+document.querySelectorAll(".eye").forEach(button => {
+  button.addEventListener("click", () => {
+    const input = document.getElementById(button.dataset.target);
+    const visible = input.type === "text";
+    input.type = visible ? "password" : "text";
+    button.textContent = visible ? "VOIR" : "CACHER";
   });
 });
 
-form.addEventListener("submit",async e=>{
+form.addEventListener("submit", async e => {
   e.preventDefault();
+  if (submitting) return;
 
-  const firstName=document.getElementById("firstName").value.trim();
-  const lastName=document.getElementById("lastName").value.trim();
-  const username=document.getElementById("username").value.trim();
-  const email=document.getElementById("email").value.trim();
-  const password=document.getElementById("password").value;
-  const confirmPassword=document.getElementById("confirmPassword").value;
+  const firstName = document.getElementById("firstName").value.trim();
+  const lastName = document.getElementById("lastName").value.trim();
+  const username = document.getElementById("username").value.trim();
+  const email = document.getElementById("email").value.trim().toLowerCase();
+  const password = document.getElementById("password").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
 
-  if(password!==confirmPassword){
-    showMessage("Les deux mots de passe ne correspondent pas.");
-    return;
-  }
+  if (password !== confirmPassword) return showMessage("Les deux mots de passe ne correspondent pas.");
+  if (!/^[a-zA-Z0-9_]{3,24}$/.test(username)) return showMessage("Le pseudo doit contenir 3 à 24 caractères : lettres, chiffres ou underscore.");
+  if (password.length < 8) return showMessage("Le mot de passe doit contenir au moins 8 caractères.");
 
-  if(!/^[a-zA-Z0-9_]{3,24}$/.test(username)){
-    showMessage("Votre pseudo doit contenir 3 à 24 caractères : lettres, chiffres ou underscore.");
-    return;
-  }
+  submitting = true;
+  btn.disabled = true;
+  btn.textContent = "Vérification du compte...";
 
-  if(password.length<8){
-    showMessage("Le mot de passe doit contenir au moins 8 caractères.");
-    return;
-  }
+  try {
+    // Empêche deux profils d'utiliser le même pseudo (insensible à la casse).
+    const usernameQuery = query(collection(db, "users"), where("usernameLower", "==", username.toLowerCase()));
+    const usernameResults = await getDocs(usernameQuery);
+    if (!usernameResults.empty) throw new Error("GENESIX_USERNAME_TAKEN");
 
-  btn.disabled=true;
-  btn.textContent="Création du compte...";
+    btn.textContent = "Création du compte...";
+    const credential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = credential.user;
+    const displayName = (firstName + " " + lastName).trim();
 
-  let credential=null;
+    await updateProfile(user, { displayName });
 
-  try{
-    credential=await createUserWithEmailAndPassword(auth,email,password);
-
-    const user=credential.user;
-    const displayName=firstName+" "+lastName;
-
-    await updateProfile(user,{
-      displayName:displayName
-    });
-
-    await set(ref(db,"users/"+user.uid),{
-      uid:user.uid,
-      firstName:firstName,
-      lastName:lastName,
-      displayName:displayName,
-      username:username,
-      usernameLower:username.toLowerCase(),
-      email:email,
-      photoURL:"",
-      bio:"",
-      online:true,
-      createdAt:serverTimestamp(),
-      lastSeen:serverTimestamp()
-    });
-
-    showMessage("Votre compte GENESIX a été créé avec succès !","success");
-
-    window.location.replace("./discussions.html");
-
-  }catch(error){
-
-    const errors={
-      "auth/email-already-in-use":"Cette adresse email possède déjà un compte.",
-      "auth/invalid-email":"Adresse email invalide.",
-      "auth/weak-password":"Mot de passe trop faible.",
-      "auth/network-request-failed":"Vérifiez votre connexion Internet.",
-      "auth/operation-not-allowed":"Activez Email/Mot de passe dans Firebase Authentication."
+    const profile = {
+      uid: user.uid,
+      firstName,
+      lastName,
+      name: displayName,
+      displayName,
+      username,
+      usernameLower: username.toLowerCase(),
+      email,
+      photoURL: "",
+      photo: "",
+      bio: "",
+      status: "Salut, je suis sur GENESIX",
+      points: 0,
+      online: true,
+      createdAt: serverTimestamp(),
+      lastSeen: serverTimestamp()
     };
 
-    if(credential && auth.currentUser){
-      showMessage("Compte créé, mais le profil n'a pas pu être enregistré. Ne recréez pas de compte. Vérifiez les règles Firebase et réessayez après correction.");
-    }else{
-      showMessage(errors[error.code]||"Une erreur est survenue pendant l'inscription.");
+    // Le profil est écrit dans Firestore, au même endroit que celui lu par discussions.html.
+    await setDoc(doc(db, "users", user.uid), profile);
+    showMessage("Compte créé avec succès ! Ouverture de vos discussions...", "success");
+    window.location.replace("./discussions.html");
+  } catch (error) {
+    const errors = {
+      "auth/email-already-in-use": "Cette adresse email possède déjà un compte. Connectez-vous plutôt.",
+      "auth/invalid-email": "Adresse email invalide.",
+      "auth/weak-password": "Le mot de passe doit contenir au moins 8 caractères.",
+      "auth/network-request-failed": "Connexion Internet interrompue. Réessayez.",
+      "auth/operation-not-allowed": "Activez le fournisseur Email/Mot de passe dans Firebase Authentication.",
+      "auth/too-many-requests": "Trop de tentatives. Réessayez plus tard."
+    };
+    if (error.message === "GENESIX_USERNAME_TAKEN") {
+      showMessage("Ce pseudo est déjà utilisé. Choisissez-en un autre.");
+    } else if (auth.currentUser) {
+      // L'authentification a pu réussir avant une coupure pendant l'écriture du profil.
+      showMessage("Votre compte de connexion existe déjà, mais le profil n'a pas été confirmé. Rechargez cette page ou contactez l'administrateur avant de retenter une inscription.");
+    } else {
+      showMessage(errors[error.code] || "Inscription impossible : " + (error.message || "erreur inconnue"));
     }
-
-    btn.disabled=false;
-    btn.textContent="Créer mon compte →";
+    submitting = false;
+    btn.disabled = false;
+    btn.textContent = "Créer mon compte →";
   }
 });
 </script>
