@@ -1,13 +1,12 @@
 {
   "version": 2,
-  "cleanUrls": true,
-  "rewrites": [
-    { "source": "/api/:path*", "destination": "/api/[...chemin].js" },
-    { "source": "/api/build", "destination": "/api/build.js" },
-    { "source": "/", "destination": "/index.html" },
-    { "source": "/login", "destination": "/login.html" },
-    { "source": "/register", "destination": "/register.html" },
-    { "source": "/discussions", "destination": "/discussions.html" },
-    { "source": "/chat", "destination": "/chat.html" }
+  "builds": [
+    { "src": "api/build.js", "use": "@vercel/node" },
+    { "src": "backend/app.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/build.js" },
+    { "src": "/backend/(.*)", "dest": "/backend/app.js" },
+    { "src": "/(.*)", "dest": "/$1" }
   ]
 }
