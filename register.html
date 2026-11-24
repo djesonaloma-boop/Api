@@ -1,970 +1,305 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#050a1a">
-<meta name="description" content="Créer votre compte GENESIX">
-<title>GENESIX — Créer un compte</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#050914">
+<title>GENESIX — Inscription</title>
 
 <style>
-@property --angle {
-syntax:"<angle>";
-inherits:false;
-initial-value:0deg;
-}
-
-:root{
---bg:#050a1a;
---panel:rgba(14,20,42,.76);
---line:rgba(140,160,255,.17);
---text:#eef1fb;
---muted:#8a95b3;
---accent:#7c5cff;
---accent2:#12d6b4;
---shadow:rgba(0,0,0,.45);
-color-scheme:dark;
-}
-
-:root[data-theme="white"]{
---bg:#f2f5ff;
---panel:rgba(255,255,255,.82);
---line:rgba(60,80,130,.15);
---text:#11182c;
---muted:#66718b;
---accent:#6848ed;
---accent2:#00a98e;
---shadow:rgba(40,50,90,.13);
-color-scheme:light;
-}
-
-:root[data-theme="black"]{
---bg:#000;
---panel:rgba(20,20,25,.88);
---line:rgba(255,255,255,.12);
---text:#f5f5f5;
---muted:#999;
---accent:#805cff;
---accent2:#00d9b5;
---shadow:rgba(0,0,0,.8);
-color-scheme:dark;
-}
-
-*{box-sizing:border-box;margin:0;padding:0}
-
+*{margin:0;padding:0;box-sizing:border-box}
 body{
-min-height:100vh;
-min-height:100dvh;
-font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
-background:var(--bg);
-color:var(--text);
-overflow-x:hidden;
-transition:background .35s,color .35s;
+  min-height:100vh;
+  min-height:100dvh;
+  font-family:Arial,sans-serif;
+  background:#050914;color:#fff;
+  display:flex;justify-content:center;
+  align-items:center;padding:22px;
 }
-
-.background{
-position:fixed;
-inset:0;
-z-index:-2;
-overflow:hidden;
-pointer-events:none;
+body:before{
+  content:"";position:fixed;inset:0;
+  background:
+  linear-gradient(#00d4ff08 1px,transparent 1px),
+  linear-gradient(90deg,#00d4ff08 1px,transparent 1px);
+  background-size:35px 35px;pointer-events:none;
 }
-
-.background i{
-position:absolute;
-border-radius:50%;
-filter:blur(90px);
-opacity:.45;
-animation:float 18s ease-in-out infinite alternate;
+.glow{
+  position:fixed;width:280px;height:280px;
+  background:#0077ff;filter:blur(130px);
+  opacity:.2;top:0;left:50%;transform:translateX(-50%);
 }
-
-.background i:nth-child(1){
-width:48vmax;
-height:48vmax;
-background:#593cff;
-left:-18vmax;
-top:-20vmax;
-}
-
-.background i:nth-child(2){
-width:40vmax;
-height:40vmax;
-background:#00c9ae;
-right:-15vmax;
-bottom:-20vmax;
-opacity:.25;
-animation-delay:-6s;
-}
-
-.background i:nth-child(3){
-width:28vmax;
-height:28vmax;
-background:#286aff;
-right:15vw;
-top:-12vmax;
-opacity:.25;
-animation-delay:-10s;
-}
-
-@keyframes float{
-to{transform:translate(6vmax,4vmax) scale(1.12)}
-}
-
-.grid-bg{
-position:fixed;
-inset:0;
-z-index:-1;
-pointer-events:none;
-background-image:
-linear-gradient(rgba(124,92,255,.055) 1px,transparent 1px),
-linear-gradient(90deg,rgba(124,92,255,.055) 1px,transparent 1px);
-background-size:55px 55px;
-mask-image:radial-gradient(ellipse at center,#000 10%,transparent 80%);
-}
-
-header{
-width:100%;
-max-width:1250px;
-margin:auto;
-padding:20px 25px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
+.container{position:relative;width:100%;max-width:440px;padding:10px 0}
+.brand{text-align:center;margin-bottom:22px}
 .logo{
-display:flex;
-align-items:center;
-gap:12px;
-font-size:21px;
-font-weight:900;
-letter-spacing:1px;
+  width:65px;height:65px;margin:0 auto 10px;
+  border-radius:21px;display:grid;place-items:center;
+  font-size:39px;font-weight:900;
+  background:linear-gradient(135deg,#087cff,#00dfd0,#925bff);
+  box-shadow:0 0 30px #008cff45;
 }
-
-.logo-icon{
-width:44px;
-height:44px;
-border-radius:14px;
-display:grid;
-place-items:center;
-font-size:23px;
-color:white;
-background:linear-gradient(135deg,#7655ff,#09cdb5);
-box-shadow:0 8px 30px rgba(124,92,255,.4);
+.brand h1{
+  font-size:27px;letter-spacing:4px;
+  background:linear-gradient(90deg,#fff,#00d9ff,#a98aff);
+  -webkit-background-clip:text;color:transparent;
 }
-
-.logo span{color:var(--accent2)}
-
-.theme-btn{
-display:flex;
-align-items:center;
-gap:8px;
-border:1px solid var(--line);
-background:var(--panel);
-color:var(--text);
-padding:11px 15px;
-border-radius:13px;
-cursor:pointer;
-font-size:13px;
-font-weight:700;
-backdrop-filter:blur(12px);
+.brand p{font-size:12px;color:#91a5c0;margin-top:6px}
+.card{
+  background:#0d192fe8;
+  border:1px solid #00d4ff28;
+  border-radius:23px;padding:23px 19px;
+  box-shadow:0 20px 60px #0007;
+  backdrop-filter:blur(18px);
 }
-
-main{
-width:100%;
-max-width:750px;
-margin:auto;
-padding:25px 18px 50px;
+.card h2{font-size:22px;margin-bottom:7px}
+.description{font-size:12px;color:#91a5c0;margin-bottom:20px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{margin-bottom:14px;min-width:0}
+label{display:block;font-size:11px;color:#c1d0e5;margin-bottom:8px}
+input{
+  width:100%;height:47px;padding:0 12px;
+  border:1px solid #263954;border-radius:11px;
+  background:#091426;color:#fff;outline:none;font-size:16px;
 }
-
-.register-card{
-width:100%;
-padding:32px;
-position:relative;
-border-radius:28px;
-background:var(--panel);
-border:1px solid var(--line);
-backdrop-filter:blur(25px);
-box-shadow:0 35px 100px var(--shadow);
-animation:appear .8s ease both;
-overflow:hidden;
+input:focus{border-color:#00cfff;box-shadow:0 0 0 3px #00cfff15}
+.full{grid-column:1/-1}
+.password-wrap{position:relative}
+.password-wrap input{padding-right:57px}
+.eye{
+  position:absolute;right:8px;top:50%;
+  transform:translateY(-50%);
+  border:0;background:none;color:#00d9ff;
+  padding:9px;font-size:11px;
 }
-
-.register-card::before{
-content:"";
-position:absolute;
-inset:0;
-border-radius:inherit;
-padding:1px;
-background:conic-gradient(
-from var(--angle),
-transparent 0 55%,
-var(--accent) 72%,
-var(--accent2) 88%,
-transparent 100%
-);
--webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
--webkit-mask-composite:xor;
-mask-composite:exclude;
-pointer-events:none;
-animation:rotate 7s linear infinite;
+.hint{font-size:10px;color:#758ba7;margin-top:7px}
+.check{
+  display:flex;align-items:flex-start;gap:9px;
+  color:#a8b8ce;font-size:11px;
+  line-height:1.5;margin:8px 0 18px;
 }
-
-@keyframes rotate{
-to{--angle:360deg}
+.check input{width:17px;height:17px;flex-shrink:0;accent-color:#00cfff}
+.check a{color:#00d9ff;text-decoration:none}
+.btn{
+  width:100%;height:51px;border:0;border-radius:13px;
+  color:#fff;font-weight:bold;font-size:14px;
+  background:linear-gradient(100deg,#087cff,#00cfc8);
+  cursor:pointer;box-shadow:0 8px 25px #007bff30;
 }
-
-@keyframes appear{
-from{opacity:0;transform:translateY(25px)}
-to{opacity:1;transform:translateY(0)}
-}
-
-.register-icon{
-width:76px;
-height:76px;
-margin:0 auto 17px;
-border-radius:24px;
-display:grid;
-place-items:center;
-font-size:36px;
-background:linear-gradient(135deg,#7655ff,#09cdb5);
-box-shadow:0 10px 35px rgba(124,92,255,.35);
-}
-
-h1{
-text-align:center;
-font-size:30px;
-font-weight:900;
-letter-spacing:-1px;
-}
-
-.subtitle{
-text-align:center;
-color:var(--muted);
-font-size:13px;
-line-height:1.8;
-margin:12px 0 28px;
-}
-
-.section-title{
-display:flex;
-align-items:center;
-gap:10px;
-margin:27px 0 18px;
-font-size:12px;
-font-weight:900;
-letter-spacing:1px;
-color:var(--accent2);
-}
-
-.section-title::after{
-content:"";
-height:1px;
-flex:1;
-background:var(--line);
-}
-
-.row{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:14px;
-}
-
-.field{
-margin-bottom:17px;
-min-width:0;
-}
-
-.field label{
-display:block;
-font-size:12px;
-font-weight:750;
-margin-bottom:9px;
-}
-
-.field input,
-.field select{
-width:100%;
-min-width:0;
-padding:15px;
-border:1px solid var(--line);
-border-radius:13px;
-background:rgba(120,130,180,.07);
-color:var(--text);
-outline:none;
-font-size:14px;
-font-family:inherit;
-transition:.25s;
-}
-
-.field input:focus,
-.field select:focus{
-border-color:var(--accent);
-box-shadow:0 0 0 3px rgba(124,92,255,.12);
-}
-
-.field input::placeholder{
-color:var(--muted);
-}
-
-.field select option{
-background:var(--bg);
-color:var(--text);
-}
-
-.field input[type="date"]{
-color-scheme:inherit;
-}
-
-.phone-row{
-display:grid;
-grid-template-columns:125px 1fr;
-gap:10px;
-}
-
-.password-wrap{
-position:relative;
-}
-
-.password-wrap input{
-padding-right:48px;
-}
-
-.toggle{
-position:absolute;
-right:13px;
-top:50%;
-transform:translateY(-50%);
-border:0;
-background:none;
-color:var(--muted);
-font-size:18px;
-cursor:pointer;
-padding:5px;
-}
-
-.hint{
-font-size:10px;
-color:var(--muted);
-margin-top:7px;
-line-height:1.5;
-}
-
-.strength{
-height:5px;
-border-radius:10px;
-background:var(--line);
-margin-top:10px;
-overflow:hidden;
-}
-
-.strength span{
-display:block;
-width:0;
-height:100%;
-border-radius:10px;
-transition:.3s;
-}
-
-.strength-text{
-font-size:10px;
-color:var(--muted);
-margin-top:7px;
-}
-
-.terms{
-display:flex;
-align-items:flex-start;
-gap:10px;
-font-size:11px;
-line-height:1.7;
-color:var(--muted);
-margin:23px 0;
-}
-
-.terms input{
-accent-color:var(--accent);
-margin-top:4px;
-flex:none;
-}
-
-a{
-color:var(--accent2);
-text-decoration:none;
-}
-
-.submit{
-width:100%;
-padding:17px;
-border:0;
-border-radius:15px;
-background:linear-gradient(110deg,#7655ff,#4f78ff 60%,#10c6b5);
-color:white;
-font-size:15px;
-font-weight:850;
-letter-spacing:.3px;
-cursor:pointer;
-box-shadow:0 15px 35px rgba(95,92,255,.35);
-transition:.25s;
-}
-
-.submit:hover{
-transform:translateY(-3px);
-box-shadow:0 20px 45px rgba(95,92,255,.5);
-}
-
-.submit:disabled{
-opacity:.6;
-cursor:wait;
-}
-
+.btn:disabled{opacity:.6}
 .message{
-display:none;
-padding:13px;
-border-radius:12px;
-font-size:12px;
-line-height:1.6;
-margin-bottom:18px;
+  display:none;padding:12px;border-radius:10px;
+  font-size:12px;line-height:1.5;margin-bottom:15px;
 }
-
-.message.error{
-display:block;
-background:rgba(255,70,90,.12);
-color:#ff8999;
-}
-
-.message.success{
-display:block;
-background:rgba(18,214,180,.12);
-color:var(--accent2);
-}
-
-.divider{
-display:flex;
-align-items:center;
-gap:12px;
-color:var(--muted);
-font-size:11px;
-margin:27px 0;
-}
-
-.divider::before,
-.divider::after{
-content:"";
-height:1px;
-background:var(--line);
-flex:1;
-}
-
-.login{
-text-align:center;
-color:var(--muted);
-font-size:13px;
-}
-
-.back{
-display:block;
-text-align:center;
-margin-top:23px;
-font-size:12px;
-color:var(--muted);
-}
-
-footer{
-max-width:1150px;
-margin:0 auto;
-padding:23px;
-border-top:1px solid var(--line);
-text-align:center;
-color:var(--muted);
-font-size:12px;
-line-height:1.8;
-}
-
-footer strong{color:var(--accent2)}
-
-@media(max-width:500px){
-header{padding:16px}
-main{padding:15px 12px 35px}
-.register-card{padding:25px 18px;border-radius:23px}
-h1{font-size:26px}
-.row{gap:9px}
-.field input,.field select{padding:14px 11px;font-size:13px}
-.phone-row{grid-template-columns:105px 1fr;gap:7px}
-.theme-btn span{display:none}
-}
-
+.error{display:block;background:#ff42421a;color:#ff8585;border:1px solid #ff424240}
+.success{display:block;background:#00d6a51a;color:#43e9bd;border:1px solid #00d6a540}
+.bottom{text-align:center;color:#91a5c0;font-size:12px;margin-top:20px}
+.bottom a{color:#00d9ff;text-decoration:none;font-weight:bold}
+footer{text-align:center;color:#60728c;font-size:10px;margin-top:20px}
+footer strong{color:#00d9ff}
 @media(max-width:350px){
-.row{grid-template-columns:1fr}
-}
-
-@media(prefers-reduced-motion:reduce){
-*,*::before,*::after{
-animation:none!important;
-transition:none!important;
-}
+  .grid{grid-template-columns:1fr}
+  .full{grid-column:auto}
 }
 </style>
 </head>
 
 <body>
+<div class="glow"></div>
 
-<div class="background" aria-hidden="true">
-<i></i><i></i><i></i>
-</div>
-<div class="grid-bg"></div>
+<main class="container">
 
-<header>
-<div class="logo">
-<div class="logo-icon">G</div>
-GENES<span>IX</span>
-</div>
-
-<button class="theme-btn" id="themeBtn" type="button">
-<span id="themeIcon">🌙</span>
-<span id="themeLabel">Mode bleu nuit</span> ▾
-</button>
+<header class="brand">
+  <div class="logo">G</div>
+  <h1>GENESIX</h1>
+  <p>Rejoignez notre communauté.</p>
 </header>
 
-<main>
+<section class="card">
+  <h2>Créer un compte ✨</h2>
+  <p class="description">Remplissez les informations pour rejoindre GENESIX.</p>
 
-<section class="register-card">
+  <div id="message" class="message" role="alert"></div>
 
-<div class="register-icon">👤</div>
+  <form id="registerForm">
 
-<h1>Créer un compte</h1>
+    <div class="grid">
 
-<p class="subtitle">
-Rejoignez GENESIX et connectez-vous avec
-les personnes qui comptent pour vous.
-</p>
+      <div class="field">
+        <label for="firstName">Prénom</label>
+        <input id="firstName" type="text" placeholder="Votre prénom" maxlength="40" autocomplete="given-name" required>
+      </div>
 
-<div class="message" id="message" role="alert"></div>
+      <div class="field">
+        <label for="lastName">Nom</label>
+        <input id="lastName" type="text" placeholder="Votre nom" maxlength="40" autocomplete="family-name" required>
+      </div>
 
-<form id="registerForm" novalidate>
+      <div class="field full">
+        <label for="username">Pseudo GENESIX</label>
+        <input id="username" type="text" placeholder="Exemple : jason_aloma" minlength="3" maxlength="24" pattern="[A-Za-z0-9_]+" required>
+        <p class="hint">Lettres, chiffres et underscore uniquement.</p>
+      </div>
 
-<div class="section-title">01 · INFORMATIONS PERSONNELLES</div>
+      <div class="field full">
+        <label for="email">Adresse email</label>
+        <input id="email" type="email" placeholder="exemple@email.com" autocomplete="email" required>
+      </div>
 
-<div class="row">
+      <div class="field full">
+        <label for="password">Mot de passe</label>
+        <div class="password-wrap">
+          <input id="password" type="password" placeholder="Minimum 8 caractères" minlength="8" autocomplete="new-password" required>
+          <button class="eye" type="button" data-target="password">VOIR</button>
+        </div>
+      </div>
 
-<div class="field">
-<label for="firstName">Prénom *</label>
-<input id="firstName" type="text"
-placeholder="Votre prénom"
-autocomplete="given-name"
-maxlength="50" required>
-</div>
+      <div class="field full">
+        <label for="confirmPassword">Confirmer le mot de passe</label>
+        <div class="password-wrap">
+          <input id="confirmPassword" type="password" placeholder="Répétez le mot de passe" minlength="8" autocomplete="new-password" required>
+          <button class="eye" type="button" data-target="confirmPassword">VOIR</button>
+        </div>
+      </div>
 
-<div class="field">
-<label for="lastName">Nom *</label>
-<input id="lastName" type="text"
-placeholder="Votre nom"
-autocomplete="family-name"
-maxlength="50" required>
-</div>
+    </div>
 
-</div>
+    <label class="check">
+      <input type="checkbox" id="terms" required>
+      <span>J'accepte les conditions d'utilisation et la politique de confidentialité de GENESIX.</span>
+    </label>
 
-<div class="field">
-<label for="username">Pseudonyme *</label>
-<input id="username" type="text"
-placeholder="Ex : JasonAloma"
-autocomplete="username"
-minlength="3" maxlength="25"
-pattern="[a-zA-Z0-9_]+"
-required>
-<div class="hint">
-Votre identifiant public. Lettres, chiffres et underscore uniquement.
-</div>
-</div>
+    <button type="submit" class="btn" id="registerBtn">
+      Créer mon compte →
+    </button>
 
-<div class="row">
+  </form>
 
-<div class="field">
-<label for="birthDate">Date de naissance *</label>
-<input id="birthDate" type="date" required>
-</div>
-
-<div class="field">
-<label for="gender">Sexe *</label>
-<select id="gender" required>
-<option value="">Sélectionner</option>
-<option value="homme">Homme</option>
-<option value="femme">Femme</option>
-<option value="non_precise">Je préfère ne pas préciser</option>
-</select>
-</div>
-
-</div>
-
-<div class="section-title">02 · LOCALISATION</div>
-
-<div class="row">
-
-<div class="field">
-<label for="country">Pays *</label>
-<select id="country" required>
-<option value="RDC" selected>🇨🇩 RD Congo</option>
-<option value="Congo">🇨🇬 Congo</option>
-<option value="France">🇫🇷 France</option>
-<option value="Belgique">🇧🇪 Belgique</option>
-<option value="Angola">🇦🇴 Angola</option>
-<option value="Rwanda">🇷🇼 Rwanda</option>
-<option value="Cameroun">🇨🇲 Cameroun</option>
-<option value="Cote d'Ivoire">🇨🇮 Côte d'Ivoire</option>
-<option value="Senegal">🇸🇳 Sénégal</option>
-<option value="Gabon">🇬🇦 Gabon</option>
-<option value="Kenya">🇰🇪 Kenya</option>
-<option value="Afrique du Sud">🇿🇦 Afrique du Sud</option>
-<option value="Autre">Autre pays</option>
-</select>
-</div>
-
-<div class="field">
-<label for="city">Ville *</label>
-<input id="city" type="text"
-placeholder="Ex : Kinshasa"
-autocomplete="address-level2"
-maxlength="70" required>
-</div>
-
-</div>
-
-<div class="section-title">03 · CONTACT</div>
-
-<div class="field">
-<label for="email">Adresse e-mail *</label>
-<input id="email" type="email"
-placeholder="exemple@email.com"
-autocomplete="email"
-required>
-</div>
-
-<div class="field">
-<label for="phone">Numéro de téléphone *</label>
-
-<div class="phone-row">
-
-<select id="countryCode" aria-label="Indicatif téléphonique">
-<option value="+243" selected>🇨🇩 +243</option>
-<option value="+242">🇨🇬 +242</option>
-<option value="+33">🇫🇷 +33</option>
-<option value="+32">🇧🇪 +32</option>
-<option value="+244">🇦🇴 +244</option>
-<option value="+250">🇷🇼 +250</option>
-<option value="+237">🇨🇲 +237</option>
-<option value="+225">🇨🇮 +225</option>
-<option value="+221">🇸🇳 +221</option>
-<option value="+254">🇰🇪 +254</option>
-<option value="+27">🇿🇦 +27</option>
-<option value="+1">🇺🇸 +1</option>
-<option value="+44">🇬🇧 +44</option>
-</select>
-
-<input id="phone" type="tel"
-placeholder="Votre numéro"
-autocomplete="tel-national"
-inputmode="numeric"
-required>
-
-</div>
-</div>
-
-<div class="section-title">04 · SÉCURITÉ DU COMPTE</div>
-
-<div class="field">
-<label for="password">Mot de passe *</label>
-
-<div class="password-wrap">
-<input id="password" type="password"
-placeholder="Minimum 8 caractères"
-autocomplete="new-password"
-minlength="8" required>
-
-<button type="button" class="toggle"
-data-target="password" aria-label="Afficher le mot de passe">◉</button>
-</div>
-
-<div class="strength">
-<span id="strengthBar"></span>
-</div>
-
-<div class="strength-text" id="strengthText">
-Sécurité du mot de passe
-</div>
-</div>
-
-<div class="field">
-<label for="confirmPassword">Confirmer le mot de passe *</label>
-
-<div class="password-wrap">
-<input id="confirmPassword" type="password"
-placeholder="Répétez votre mot de passe"
-autocomplete="new-password"
-required>
-
-<button type="button" class="toggle"
-data-target="confirmPassword" aria-label="Afficher la confirmation">◉</button>
-</div>
-</div>
-
-<label class="terms">
-<input type="checkbox" id="terms" required>
-<span>
-J'accepte les
-<a href="terms.html">conditions d'utilisation</a>
-et la
-<a href="privacy.html">politique de confidentialité</a>
-de GENESIX.
-</span>
-</label>
-
-<button class="submit" type="submit" id="submitBtn">
-Créer mon compte　➜
-</button>
-
-</form>
-
-<div class="divider">DÉJÀ MEMBRE ?</div>
-
-<p class="login">
-Vous avez déjà un compte ?
-<a href="login.html">Se connecter</a>
-</p>
-
-<a href="index.html" class="back">← Retour à l'accueil</a>
-
+  <p class="bottom">
+    Vous avez déjà un compte ?
+    <a href="./login.html">Se connecter</a>
+  </p>
 </section>
-</main>
 
 <footer>
-© 2026 GENESIX · Tous droits réservés<br>
-Créé par <strong>Jason Aloma 🇨🇩</strong><br>
-Kinshasa · RDC
+  Créé par <strong>Jason Aloma 🇨🇩</strong> · Kinshasa · RDC
 </footer>
 
-<script>
-(function(){
-const root=document.documentElement;
-const btn=document.getElementById("themeBtn");
-const icon=document.getElementById("themeIcon");
-const label=document.getElementById("themeLabel");
-const themes=[
-{id:"dark",icon:"🌙",label:"Mode bleu nuit"},
-{id:"white",icon:"☀️",label:"Mode blanc"},
-{id:"black",icon:"⚫",label:"Mode noir"}
-];
-let current="dark";
-try{
-const saved=localStorage.getItem("genesix_theme");
-if(themes.some(t=>t.id===saved))current=saved;
-}catch(e){}
-function applyTheme(){
-root.setAttribute("data-theme",current==="dark"?"":current);
-const selected=themes.find(t=>t.id===current);
-icon.textContent=selected.icon;
-label.textContent=selected.label;
-document.querySelector('meta[name="theme-color"]').content=
-current==="white"?"#f2f5ff":
-current==="black"?"#000000":"#050a1a";
-try{localStorage.setItem("genesix_theme",current);}catch(e){}
-}
-btn.addEventListener("click",()=>{
-const index=themes.findIndex(t=>t.id===current);
-current=themes[(index+1)%themes.length].id;
-applyTheme();
-});
-applyTheme();
-})();
+</main>
 
-const birthInput=document.getElementById("birthDate");
-const today=new Date();
-const maxDate=[
-today.getFullYear(),
-String(today.getMonth()+1).padStart(2,"0"),
-String(today.getDate()).padStart(2,"0")
-].join("-");
-birthInput.max=maxDate;
-
-document.querySelectorAll(".toggle").forEach(button=>{
-button.addEventListener("click",()=>{
-const input=document.getElementById(button.dataset.target);
-input.type=input.type==="password"?"text":"password";
-button.textContent=input.type==="text"?"◎":"◉";
-});
-});
-
-const password=document.getElementById("password");
-const bar=document.getElementById("strengthBar");
-const strengthText=document.getElementById("strengthText");
-password.addEventListener("input",()=>{
-const value=password.value;
-let score=0;
-if(value.length>=8)score++;
-if(/[A-Z]/.test(value))score++;
-if(/[0-9]/.test(value))score++;
-if(/[^A-Za-z0-9]/.test(value))score++;
-const levels=[
-{width:"0%",text:"Sécurité du mot de passe"},
-{width:"25%",text:"Faible"},
-{width:"50%",text:"Moyen"},
-{width:"75%",text:"Bon"},
-{width:"100%",text:"Excellent"}
-];
-bar.style.width=levels[score].width;
-bar.style.background=["transparent","#ff5364","#ffa63d","#b5d84b","#12d6b4"][score];
-strengthText.textContent=levels[score].text;
-});
-</script>
-
-<!-- FIREBASE GENESIX - starlink-investit -->
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc, query, collection, where, getDocs, updateDoc, increment, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",
-  authDomain: "starlink-investit.firebaseapp.com",
-  databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com",
-  projectId: "starlink-investit",
-  storageBucket: "starlink-investit.firebasestorage.app",
-  messagingSenderId: "807081599583",
-  appId: "1:807081599583:web:e00ec3959bc4acdae031ea"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+import {
+  auth,
+  db,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  onAuthStateChanged,
+  ref,
+  set,
+  serverTimestamp
+} from "./assets/js/firebase.js";
 
 const form=document.getElementById("registerForm");
 const message=document.getElementById("message");
-const submitBtn=document.getElementById("submitBtn");
+const btn=document.getElementById("registerBtn");
 
-function showMessage(text,type){
+function showMessage(text,type="error"){
   message.textContent=text;
   message.className="message "+type;
-  message.scrollIntoView({behavior:"smooth",block:"center"});
-}
-function getAge(dateString){
-  const birth=new Date(dateString+"T00:00:00");
-  const now=new Date();
-  let age=now.getFullYear()-birth.getFullYear();
-  const month=now.getMonth()-birth.getMonth();
-  if(month<0||(month===0&&now.getDate()<birth.getDate())) age--;
-  return age;
 }
 
-form.addEventListener("submit",async(e)=>{
+onAuthStateChanged(auth,user=>{
+  if(user){
+    window.location.replace("./discussions.html");
+  }
+});
+
+// Afficher / masquer les mots de passe
+document.querySelectorAll(".eye").forEach(button=>{
+  button.addEventListener("click",()=>{
+    const input=document.getElementById(button.dataset.target);
+    const visible=input.type==="text";
+    input.type=visible?"password":"text";
+    button.textContent=visible?"VOIR":"CACHER";
+  });
+});
+
+form.addEventListener("submit",async e=>{
   e.preventDefault();
-  message.className="message";
 
   const firstName=document.getElementById("firstName").value.trim();
   const lastName=document.getElementById("lastName").value.trim();
   const username=document.getElementById("username").value.trim();
-  const birthDate=birthInput.value;
-  const gender=document.getElementById("gender").value;
-  const country=document.getElementById("country").value;
-  const city=document.getElementById("city").value.trim();
   const email=document.getElementById("email").value.trim();
-  const countryCode=document.getElementById("countryCode").value;
-  const phone=document.getElementById("phone").value.replace(/[\s()-]/g,"");
-  const pass=password.value;
-  const confirm=document.getElementById("confirmPassword").value;
-  const terms=document.getElementById("terms").checked;
+  const password=document.getElementById("password").value;
+  const confirmPassword=document.getElementById("confirmPassword").value;
 
-  // --- TES VALIDATIONS EXACTES ---
-  if(!firstName||!lastName||!username||!birthDate||!gender||!country||!city||!email||!phone||!pass||!confirm){
-    showMessage("Veuillez compléter toutes les informations obligatoires.","error"); return;
-  }
-  if(!/^[a-zA-Z0-9_]{3,25}$/.test(username)){
-    showMessage("Votre pseudonyme doit contenir 3 à 25 caractères : lettres, chiffres ou underscore.","error"); return;
-  }
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-    showMessage("Adresse e-mail invalide.","error"); return;
-  }
-  if(!/^[0-9]{6,15}$/.test(phone)){
-    showMessage("Veuillez saisir un numéro de téléphone valide.","error"); return;
-  }
-  if(new Date(birthDate+"T00:00:00")>new Date()){
-    showMessage("La date de naissance ne peut pas être dans le futur.","error"); return;
-  }
-  const age=getAge(birthDate);
-  if(age<13){
-    showMessage("Vous devez avoir au moins 13 ans pour créer un compte.","error"); return;
-  }
-  if(pass.length<8){
-    showMessage("Votre mot de passe doit contenir au moins 8 caractères.","error"); return;
-  }
-  if(pass!==confirm){
-    showMessage("Les deux mots de passe ne correspondent pas.","error"); return;
-  }
-  if(!terms){
-    showMessage("Veuillez accepter les conditions d'utilisation.","error"); return;
+  if(password!==confirmPassword){
+    showMessage("Les deux mots de passe ne correspondent pas.");
+    return;
   }
 
-  submitBtn.disabled=true;
-  submitBtn.textContent="Création du compte...";
+  if(!/^[a-zA-Z0-9_]{3,24}$/.test(username)){
+    showMessage("Votre pseudo doit contenir 3 à 24 caractères : lettres, chiffres ou underscore.");
+    return;
+  }
 
-  try {
-    // 1. Vérifie si pseudo déjà pris
-    const q = query(collection(db, "users"), where("username", "==", username.toLowerCase()));
-    const snapPseudo = await getDocs(q);
-    if (!snapPseudo.empty) {
-      showMessage("Ce pseudonyme est déjà pris. Choisis-en un autre.", "error");
-      submitBtn.disabled=false; submitBtn.textContent="Créer mon compte　➜"; return;
-    }
+  if(password.length<8){
+    showMessage("Le mot de passe doit contenir au moins 8 caractères.");
+    return;
+  }
 
-    // 2. Crée compte Auth Firebase - le mot de passe n'est JAMAIS stocké en base
-    const cred = await createUserWithEmailAndPassword(auth, email, pass);
-    const uid = cred.user.uid;
-    const fullPhone = countryCode + phone;
-    const fullName = firstName + " " + lastName;
-    const refBy = localStorage.getItem("genesix_ref") || new URLSearchParams(location.search).get("ref") || null;
+  btn.disabled=true;
+  btn.textContent="Création du compte...";
 
-    // 3. Crée profil Firestore users/{uid}
-    await setDoc(doc(db, "users", uid), {
-      firstName, lastName,
-      name: fullName,
-      username: username.toLowerCase(),
-      usernameDisplay: username,
-      birthDate, gender, country, city,
-      email, phone: fullPhone,
-      photoURL: "",
-      photo: "",
-      bio: "Salut, je suis sur GENESIX",
-      status: "Salut, je suis sur GENESIX",
-      points: 100,
-      verified: false,
-      refBy: refBy || null,
-      createdAt: serverTimestamp(),
-      lastSeen: serverTimestamp()
+  let credential=null;
+
+  try{
+    credential=await createUserWithEmailAndPassword(auth,email,password);
+
+    const user=credential.user;
+    const displayName=firstName+" "+lastName;
+
+    await updateProfile(user,{
+      displayName:displayName
     });
 
-    // 4. Bonus parrainage +50 au parrain
-    if (refBy && refBy !== uid) {
-      const r = doc(db, "users", refBy);
-      const s = await getDoc(r);
-      if (s.exists()) await updateDoc(r, { points: increment(50) });
+    await set(ref(db,"users/"+user.uid),{
+      uid:user.uid,
+      firstName:firstName,
+      lastName:lastName,
+      displayName:displayName,
+      username:username,
+      usernameLower:username.toLowerCase(),
+      email:email,
+      photoURL:"",
+      bio:"",
+      online:true,
+      createdAt:serverTimestamp(),
+      lastSeen:serverTimestamp()
+    });
+
+    showMessage("Votre compte GENESIX a été créé avec succès !","success");
+
+    window.location.replace("./discussions.html");
+
+  }catch(error){
+
+    const errors={
+      "auth/email-already-in-use":"Cette adresse email possède déjà un compte.",
+      "auth/invalid-email":"Adresse email invalide.",
+      "auth/weak-password":"Mot de passe trop faible.",
+      "auth/network-request-failed":"Vérifiez votre connexion Internet.",
+      "auth/operation-not-allowed":"Activez Email/Mot de passe dans Firebase Authentication."
+    };
+
+    if(credential && auth.currentUser){
+      showMessage("Compte créé, mais le profil n'a pas pu être enregistré. Ne recréez pas de compte. Vérifiez les règles Firebase et réessayez après correction.");
+    }else{
+      showMessage(errors[error.code]||"Une erreur est survenue pendant l'inscription.");
     }
 
-    // 5. Sauvegarde locale
-    const token = await cred.user.getIdToken();
-    localStorage.setItem("genesix_token", token);
-    localStorage.setItem("genesix_uid", uid);
-
-    showMessage("Compte créé ✅ Bienvenue " + fullName + " ! +100 pts. Redirection...", "success");
-    setTimeout(() => location.href = "discussions.html", 1000);
-
-  } catch (err) {
-    let txt = err.message;
-    if (err.code === "auth/email-already-in-use") txt = "Cet email est déjà utilisé. Connecte-toi.";
-    if (err.code === "auth/invalid-email") txt = "Email invalide.";
-    if (err.code === "auth/weak-password") txt = "Mot de passe trop faible.";
-    if (err.code === "auth/operation-not-allowed") txt = "Email/Password non activé dans Firebase Console > Authentication.";
-    showMessage(txt, "error");
-    submitBtn.disabled = false;
-    submitBtn.textContent = "Créer mon compte　➜";
+    btn.disabled=false;
+    btn.textContent="Créer mon compte →";
   }
 });
 </script>
