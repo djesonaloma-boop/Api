@@ -1,2 +1,2 @@
-const app = require("../Backend/app.js");
-module.exports = app;
+import app from "../backend/app.js";
+export default app;
