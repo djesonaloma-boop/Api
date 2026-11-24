@@ -2,112 +2,795 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GENESIX</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#050a1a">
+<meta name="description" content="GENESIX - Votre univers de communication. Connectez-vous avec vos amis et partagez vos moments.">
+<title>GENESIX — Bienvenue</title>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#060b14;color:#fff;font-family:system-ui,sans-serif;text-align:center;padding:20px}
-.logo{font-size:42px;font-weight:900;letter-spacing:3px;margin-top:15px}
-.logo span{color:#d6ad55}
-.top{display:flex;gap:10px;justify-content:center;margin:15px 0}
-.top a{padding:10px 18px;border-radius:12px;text-decoration:none;font-weight:800;font-size:14px}
-.login{background:#17263b;color:#fff;border:1px solid rgba(255,255,255,.2)}
-.register{background:linear-gradient(135deg,#d6ad55,#b98d35);color:#000}
-.card{background:#0e1726;border:1px solid rgba(214,173,85,.3);border-radius:20px;padding:20px;margin:15px auto;max-width:420px}
-.points{font-size:50px;color:#f1d58b;font-weight:900}
-button{width:100%;padding:15px;border:0;border-radius:14px;font-size:17px;font-weight:800;cursor:pointer;margin-top:12px}
-.btn-gold{background:linear-gradient(135deg,#d6ad55,#b98d35);color:#000}
-.btn-dark{background:#17263b;color:#fff;border:1px solid rgba(255,255,255,.15)}
-input{width:100%;padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,.2);background:#09111f;color:#fff;margin-top:10px}
-small{color:#8d9bb0;line-height:1.6}
-#status{margin-top:10px;color:#8d9bb0;font-size:13px}
+@property --angle {
+  syntax:"<angle>";
+  inherits:false;
+  initial-value:0deg;
+}
+
+:root {
+  --bg:#050a1a;
+  --panel:rgba(14,20,42,.66);
+  --line:rgba(140,160,255,.17);
+  --text:#eef1fb;
+  --muted:#8a95b3;
+  --accent:#7c5cff;
+  --accent2:#12d6b4;
+  --shadow:rgba(0,0,0,.45);
+  color-scheme:dark;
+}
+
+:root[data-theme="white"] {
+  --bg:#f2f5ff;
+  --panel:rgba(255,255,255,.76);
+  --line:rgba(60,80,130,.15);
+  --text:#11182c;
+  --muted:#66718b;
+  --accent:#6848ed;
+  --accent2:#00a98e;
+  --shadow:rgba(40,50,90,.13);
+  color-scheme:light;
+}
+
+:root[data-theme="black"] {
+  --bg:#000000;
+  --panel:rgba(20,20,25,.85);
+  --line:rgba(255,255,255,.12);
+  --text:#f5f5f5;
+  --muted:#999;
+  --accent:#805cff;
+  --accent2:#00d9b5;
+  --shadow:rgba(0,0,0,.8);
+  color-scheme:dark;
+}
+
+* {
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html {
+  scroll-behavior:smooth;
+}
+
+body {
+  min-height:100vh;
+  min-height:100dvh;
+  overflow-x:hidden;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+  transition:background .35s,color .35s;
+}
+
+/* BACKGROUND */
+
+.background {
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  overflow:hidden;
+  pointer-events:none;
+}
+
+.background i {
+  position:absolute;
+  border-radius:50%;
+  filter:blur(90px);
+  opacity:.45;
+  animation:float 18s ease-in-out infinite alternate;
+}
+
+.background i:nth-child(1) {
+  width:48vmax;
+  height:48vmax;
+  background:#593cff;
+  left:-18vmax;
+  top:-20vmax;
+}
+
+.background i:nth-child(2) {
+  width:40vmax;
+  height:40vmax;
+  background:#00c9ae;
+  right:-15vmax;
+  bottom:-20vmax;
+  opacity:.25;
+  animation-delay:-6s;
+}
+
+.background i:nth-child(3) {
+  width:28vmax;
+  height:28vmax;
+  background:#286aff;
+  right:15vw;
+  top:-12vmax;
+  opacity:.25;
+  animation-delay:-10s;
+}
+
+@keyframes float {
+  to {
+    transform:translate(6vmax,4vmax) scale(1.12);
+  }
+}
+
+.grid-bg {
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(124,92,255,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(124,92,255,.055) 1px,transparent 1px);
+  background-size:55px 55px;
+  mask-image:radial-gradient(ellipse at center,#000 10%,transparent 80%);
+}
+
+/* HEADER */
+
+header {
+  width:100%;
+  max-width:1250px;
+  margin:auto;
+  padding:22px 28px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:21px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.logo-icon {
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  font-size:23px;
+  color:white;
+  background:linear-gradient(135deg,#7655ff,#09cdb5);
+  box-shadow:0 8px 30px rgba(124,92,255,.4);
+}
+
+.logo span {
+  color:var(--accent2);
+}
+
+.theme-btn {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  border:1px solid var(--line);
+  background:var(--panel);
+  color:var(--text);
+  padding:11px 15px;
+  border-radius:13px;
+  cursor:pointer;
+  font-size:13px;
+  font-weight:700;
+  backdrop-filter:blur(12px);
+  transition:.25s;
+}
+
+.theme-btn:hover {
+  border-color:var(--accent);
+  transform:translateY(-2px);
+}
+
+/* MAIN */
+
+main {
+  width:100%;
+  max-width:1150px;
+  margin:auto;
+  padding:35px 25px 20px;
+}
+
+.hero {
+  min-height:650px;
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  align-items:center;
+  gap:45px;
+}
+
+.hero-content {
+  animation:appear .9s ease both;
+}
+
+@keyframes appear {
+  from {
+    opacity:0;
+    transform:translateY(25px);
+  }
+  to {
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.chip {
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  border:1px solid var(--line);
+  background:var(--panel);
+  padding:9px 15px;
+  border-radius:30px;
+  color:var(--muted);
+  font-size:12px;
+  backdrop-filter:blur(12px);
+}
+
+.chip i {
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--accent2);
+  box-shadow:0 0 12px var(--accent2);
+  animation:pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+  50% {opacity:.3}
+}
+
+h1 {
+  margin:25px 0 18px;
+  font-size:clamp(43px,6vw,72px);
+  line-height:1.04;
+  letter-spacing:-2px;
+  font-weight:900;
+}
+
+h1 em {
+  font-style:normal;
+  background:linear-gradient(110deg,#a995ff,#12d6b4 85%);
+  color:transparent;
+  -webkit-background-clip:text;
+  background-clip:text;
+}
+
+.description {
+  color:var(--muted);
+  font-size:16px;
+  line-height:1.85;
+  max-width:540px;
+}
+
+.features {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:13px;
+  margin-top:32px;
+  max-width:520px;
+}
+
+.feature {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:15px;
+  backdrop-filter:blur(12px);
+  transition:.25s;
+}
+
+.feature:hover {
+  transform:translateY(-4px);
+  border-color:var(--accent);
+}
+
+.feature-icon {
+  width:39px;
+  height:39px;
+  flex:none;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:rgba(124,92,255,.14);
+  font-size:19px;
+}
+
+.feature-text {
+  font-size:12px;
+  font-weight:700;
+}
+
+.feature-text small {
+  display:block;
+  color:var(--muted);
+  font-weight:400;
+  margin-top:4px;
+}
+
+/* CONTINUER */
+
+.continue-btn {
+  width:100%;
+  max-width:350px;
+  margin-top:32px;
+  padding:17px 22px;
+  border-radius:15px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:13px;
+  text-decoration:none;
+  color:#fff;
+  font-size:16px;
+  font-weight:800;
+  letter-spacing:.3px;
+  background:linear-gradient(110deg,#7655ff,#4f78ff 60%,#10c6b5);
+  box-shadow:0 15px 35px rgba(95,92,255,.35);
+  position:relative;
+  overflow:hidden;
+  transition:.25s;
+}
+
+.continue-btn:hover {
+  transform:translateY(-3px);
+  box-shadow:0 20px 45px rgba(95,92,255,.5);
+}
+
+.continue-btn:active {
+  transform:scale(.98);
+}
+
+.continue-btn::after {
+  content:"";
+  position:absolute;
+  width:40%;
+  height:100%;
+  left:-60%;
+  top:0;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.3),transparent);
+  transform:skewX(-20deg);
+  animation:shine 4s infinite;
+}
+
+@keyframes shine {
+  70%,100% {left:140%}
+}
+
+.note {
+  color:var(--muted);
+  font-size:12px;
+  margin-top:14px;
+}
+
+/* VISUAL CARD */
+
+.visual {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  animation:appear 1.2s ease both;
+}
+
+.visual-card {
+  width:100%;
+  max-width:400px;
+  min-height:430px;
+  padding:28px;
+  position:relative;
+  border-radius:30px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  backdrop-filter:blur(25px);
+  box-shadow:0 35px 100px var(--shadow);
+  overflow:hidden;
+}
+
+.visual-card::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  padding:1.5px;
+  background:conic-gradient(from var(--angle),transparent 0 55%,var(--accent) 72%,var(--accent2) 88%,transparent 100%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  pointer-events:none;
+  animation:rotate 6s linear infinite;
+}
+
+@keyframes rotate {
+  to {--angle:360deg}
+}
+
+.orb {
+  width:180px;
+  height:180px;
+  margin:20px auto 30px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:radial-gradient(circle at 35% 30%,#9c83ff,#6041df 50%,#102d75 85%);
+  box-shadow:0 0 50px rgba(124,92,255,.45),inset 0 0 30px rgba(255,255,255,.15);
+  animation:orb 5s ease-in-out infinite alternate;
+}
+
+.orb span {
+  font-size:78px;
+  filter:drop-shadow(0 5px 15px rgba(0,0,0,.25));
+}
+
+@keyframes orb {
+  to {
+    transform:translateY(-9px) scale(1.04);
+    box-shadow:0 0 80px rgba(18,214,180,.3);
+  }
+}
+
+.visual-title {
+  text-align:center;
+  font-size:23px;
+  font-weight:850;
+  margin-bottom:10px;
+}
+
+.visual-sub {
+  text-align:center;
+  font-size:13px;
+  line-height:1.7;
+  color:var(--muted);
+}
+
+.online {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  margin-top:24px;
+  font-size:12px;
+  color:var(--accent2);
+}
+
+.online i {
+  width:7px;
+  height:7px;
+  background:var(--accent2);
+  border-radius:50%;
+  box-shadow:0 0 12px var(--accent2);
+}
+
+/* FOOTER */
+
+footer {
+  max-width:1150px;
+  margin:30px auto 0;
+  padding:25px;
+  border-top:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  flex-wrap:wrap;
+  color:var(--muted);
+  font-size:12px;
+}
+
+footer strong {
+  color:var(--accent2);
+}
+
+/* MOBILE */
+
+@media(max-width:850px) {
+  header {
+    padding:18px 18px;
+  }
+
+  main {
+    padding:20px 19px;
+  }
+
+  .hero {
+    min-height:auto;
+    grid-template-columns:1fr;
+    gap:35px;
+  }
+
+  .hero-content {
+    text-align:center;
+  }
+
+  .description {
+    margin:auto;
+  }
+
+  .features {
+    margin:27px auto 0;
+    text-align:left;
+  }
+
+  .continue-btn {
+    margin:28px auto 0;
+  }
+
+  .visual-card {
+    max-width:360px;
+    min-height:380px;
+  }
+
+  .orb {
+    width:145px;
+    height:145px;
+  }
+
+  .orb span {
+    font-size:65px;
+  }
+
+  footer {
+    justify-content:center;
+    text-align:center;
+  }
+}
+
+@media(max-width:420px) {
+  h1 {
+    font-size:43px;
+  }
+
+  .features {
+    grid-template-columns:1fr;
+  }
+
+  .feature {
+    padding:12px;
+  }
+
+  .theme-btn span {
+    display:none;
+  }
+
+  .visual-card {
+    min-height:360px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after {
+    animation:none!important;
+    transition:none!important;
+  }
+}
 </style>
 </head>
+
 <body>
-<div class="logo">GENE<span>SIX</span></div>
-<p><small>Tap • Gagne • Parraine • Retire</small></p>
 
-<div id="authBtns" class="top">
-<a class="login" href="login.html">Connexion</a>
-<a class="register" href="register.html">Créer compte</a>
+<div class="background" aria-hidden="true">
+  <i></i>
+  <i></i>
+  <i></i>
 </div>
+<div class="grid-bg"></div>
 
-<div class="card">
-<div>TES POINTS</div>
-<div class="points" id="points">0</div>
-<div id="status">Connexion...</div>
-<button class="btn-gold" id="tapBtn">👆 TAP +1</button>
-<button class="btn-dark" id="bonusBtn">🎁 Bonus +10</button>
-<button class="btn-dark" id="logoutBtn" style="display:none">Déconnexion</button>
-</div>
+<header>
+  <div class="logo">
+    <div class="logo-icon">G</div>
+    GENES<span>IX</span>
+  </div>
 
-<div class="card">
-<b>🔗 TON LIEN DE PARRAINAGE</b>
-<input id="refLink" readonly value="Connecte-toi pour avoir ton lien">
-<button class="btn-dark" onclick="copyRef()">Copier mon lien</button>
-<p><small>+50 pts pour chaque ami qui s'inscrit avec ton lien.</small></p>
-</div>
+  <button class="theme-btn" id="themeBtn" type="button">
+    <span id="themeIcon">🌙</span>
+    <span id="themeLabel">Mode bleu nuit</span>
+    ▾
+  </button>
+</header>
 
-<div class="card">
-<b>💰 RETRAIT</b>
-<input id="phone" placeholder="Numéro Mobile Money ex: +243...">
-<button class="btn-gold" onclick="withdraw()">Demander retrait (Min 5000 pts)</button>
-</div>
+<main>
+<section class="hero">
 
+  <div class="hero-content">
+
+    <div class="chip">
+      <i></i>
+      BIENVENUE DANS GENESIX
+    </div>
+
+    <h1>
+      Bienvenue sur
+      <em>GENESIX.</em>
+    </h1>
+
+    <p class="description">
+      Découvrez une nouvelle expérience de communication.
+      Restez proche de vos amis, échangez vos idées,
+      partagez vos photos et créez de nouvelles connexions
+      dans un univers moderne et sécurisé.
+    </p>
+
+    <div class="features">
+
+      <div class="feature">
+        <div class="feature-icon">💬</div>
+        <div class="feature-text">
+          Discussions
+          <small>Échangez instantanément</small>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">👥</div>
+        <div class="feature-text">
+          Communauté
+          <small>Retrouvez vos amis</small>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">📸</div>
+        <div class="feature-text">
+          Partage
+          <small>Photos et souvenirs</small>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">🔒</div>
+        <div class="feature-text">
+          Confidentialité
+          <small>Votre espace personnel</small>
+        </div>
+      </div>
+
+    </div>
+
+    <a href="login.html" class="continue-btn" id="continueBtn">
+      <span id="continueText">Continuer</span>
+      <span>➜</span>
+    </a>
+
+    <p class="note" id="noteText">
+      Rejoignez GENESIX et commencez votre expérience.
+    </p>
+
+  </div>
+
+  <div class="visual">
+
+    <div class="visual-card">
+
+      <div class="orb">
+        <span>💬</span>
+      </div>
+
+      <div class="visual-title" id="visualTitle">
+        Votre monde connecté
+      </div>
+
+      <p class="visual-sub" id="visualSub">
+        Un seul espace pour discuter, partager,
+        découvrir et rester en contact avec
+        les personnes qui comptent.
+      </p>
+
+      <div class="online">
+        <i></i>
+        <span id="onlineText">Votre nouvelle expérience commence ici</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+</main>
+
+<footer>
+  <div>© 2026 GENESIX · Tous droits réservés</div>
+  <div>Créé par <strong>Jason Aloma 🇨🇩</strong></div>
+  <div>Kinshasa · RDC</div>
+</footer>
+
+<script>
+(function(){
+  const root = document.documentElement;
+  const button = document.getElementById("themeBtn");
+  const icon = document.getElementById("themeIcon");
+  const label = document.getElementById("themeLabel");
+  const themes = [
+    { id:"dark", icon:"🌙", label:"Mode bleu nuit" },
+    { id:"white", icon:"☀️", label:"Mode blanc" },
+    { id:"black", icon:"⚫", label:"Mode noir" }
+  ];
+  let current = "dark";
+  try {
+    const saved = localStorage.getItem("genesix_theme");
+    if(themes.some(t => t.id === saved)){ current = saved; }
+  } catch(e){}
+  function applyTheme(){
+    root.setAttribute("data-theme", current === "dark" ? "" : current);
+    const selected = themes.find(t => t.id === current);
+    icon.textContent = selected.icon;
+    label.textContent = selected.label;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    meta.content = current === "white" ? "#f2f5ff" : current === "black" ? "#000000" : "#050a1a";
+    try { localStorage.setItem("genesix_theme",current); } catch(e){}
+  }
+  button.addEventListener("click",function(){
+    const index = themes.findIndex(t => t.id === current);
+    current = themes[(index + 1) % themes.length].id;
+    applyTheme();
+  });
+  applyTheme();
+})();
+</script>
+
+<!-- FIREBASE GENESIX - starlink-investit -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc, updateDoc, increment, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC27jn9ieCDcncnhC0FTrhVpgcppGeVDPY",
-  authDomain: "genesix-81b12.firebaseapp.com",
-  projectId: "genesix-81b12",
-  storageBucket: "genesix-81b12.firebasestorage.app",
-  messagingSenderId: "510952368030",
-  appId: "1:510952368030:web:f4eafb07b6504008a4588f",
-  measurementId: "G-9WG19JG7RC"
+  apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",
+  authDomain: "starlink-investit.firebaseapp.com",
+  databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com",
+  projectId: "starlink-investit",
+  storageBucket: "starlink-investit.firebasestorage.app",
+  messagingSenderId: "807081599583",
+  appId: "1:807081599583:web:e00ec3959bc4acdae031ea"
 };
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
-let uid=null, myPoints=0;
-const urlParams = new URLSearchParams(location.search);
-localStorage.setItem('genesix_ref', urlParams.get('ref') || localStorage.getItem('genesix_ref') || '');
 
-onAuthStateChanged(auth, async (user)=>{
-  if(!user){
-    document.getElementById('status').textContent="Non connecté - Crée un compte";
-    return;
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+onAuthStateChanged(auth, async (user) => {
+  const btn = document.getElementById("continueBtn");
+  const btnText = document.getElementById("continueText");
+  const note = document.getElementById("noteText");
+  const visualTitle = document.getElementById("visualTitle");
+  const visualSub = document.getElementById("visualSub");
+  const onlineText = document.getElementById("onlineText");
+
+  if (user) {
+    try {
+      const snap = await getDoc(doc(db, "users", user.uid));
+      const data = snap.exists() ? snap.data() : {};
+      const name = data.name || user.email;
+      const points = data.points || 0;
+
+      btn.href = "discussions.html";
+      btnText.textContent = "Continuer comme " + name;
+      note.textContent = "⭐ " + points + " points | Bienvenue " + name + " | Clique pour voir tes discussions";
+      visualTitle.textContent = "Bon retour, " + name + " 👋";
+      visualSub.textContent = "Tu as " + points + " points. Tes discussions t'attendent. Continue à échanger avec ta communauté GENESIX.";
+      onlineText.textContent = "Connecté • " + points + " points";
+    } catch(e) {
+      btn.href = "discussions.html";
+      btnText.textContent = "Continuer vers mes discussions";
+    }
+  } else {
+    btn.href = "login.html";
+    btnText.textContent = "Continuer";
+    note.textContent = "Rejoignez GENESIX et commencez votre expérience.";
   }
-  uid=user.uid;
-  document.getElementById('authBtns').style.display='none';
-  document.getElementById('logoutBtn').style.display='block';
-  document.getElementById('status').textContent="Connecté ✅ "+user.email;
-  document.getElementById('refLink').value=location.origin+location.pathname+"?ref="+uid;
-  const ref=doc(db,"users",uid);
-  const snap=await getDoc(ref);
-  if(snap.exists()){ myPoints=snap.data().points||0; document.getElementById('points').textContent=myPoints; }
 });
-async function addPoints(n){
-  if(!uid) return location.href="login.html";
-  myPoints+=n; document.getElementById('points').textContent=myPoints;
-  await updateDoc(doc(db,"users",uid),{points:increment(n)});
-}
-document.getElementById('tapBtn').onclick=()=>addPoints(1);
-document.getElementById('bonusBtn').onclick=()=>addPoints(10);
-document.getElementById('logoutBtn').onclick=()=>signOut(auth).then(()=>location.reload());
-window.copyRef=()=>{
-  const el=document.getElementById('refLink'); el.select(); document.execCommand('copy'); alert("Lien copié ✅");
-};
-window.withdraw=async()=>{
-  const phone=document.getElementById('phone').value;
-  if(!uid) return location.href="login.html";
-  if(!phone) return alert("Mets ton numéro");
-  if(myPoints<5000) return alert("Il faut 5000 pts. Tu as "+myPoints);
-  await addDoc(collection(db,"withdrawals"),{uid,phone,points:myPoints,date:new Date(),status:"en attente"});
-  alert("Demande envoyée ✅");
-};
 </script>
+
 </body>
 </html>
