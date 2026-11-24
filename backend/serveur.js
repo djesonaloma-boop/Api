@@ -1,3 +1,5 @@
-const app = require("./app.js");
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, ()=> console.log("GENESIX Backend sur port " + PORT));
+import app from "./app.js";
+import dotenv from "dotenv";
+dotenv.config();
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, ()=>console.log("GENESIX STARLINK sur port "+PORT));
