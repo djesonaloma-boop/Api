@@ -1,11 +1,19 @@
-// TA CONFIG - NE PAS CHANGER
-const firebaseConfig = {
-  apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",
-  authDomain: "starlink-investit.firebaseapp.com",
-  databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com",
-  projectId: "starlink-investit",
-  storageBucket: "starlink-investit.firebasestorage.app",
-  messagingSenderId: "807081599583",
-  appId: "1:807081599583:web:e00ec3959bc4acdae031ea"
-};
-module.exports = firebaseConfig;
+import admin from "firebase-admin";
+import dotenv from "dotenv";
+dotenv.config();
+
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: process.env.FIREBASE_PROJECT_ID || "starlink-investit",
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n")
+    }),
+    databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com"
+  });
+}
+
+export const db = admin.firestore();
+export const rtdb = admin.database();
+export const auth = admin.auth();
+export default admin;
