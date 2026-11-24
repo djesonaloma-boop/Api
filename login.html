@@ -1,418 +1,298 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#050a1a">
-<meta name="description" content="Connectez-vous à GENESIX">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#050914">
 <title>GENESIX — Connexion</title>
 
 <style>
-:root{
---bg:#050a1a;
---panel:rgba(14,20,42,.76);
---line:rgba(140,160,255,.17);
---text:#eef1fb;
---muted:#8a95b3;
---accent:#7c5cff;
---accent2:#12d6b4;
---shadow:rgba(0,0,0,.45);
-color-scheme:dark;
-}
-:root[data-theme="white"]{
---bg:#f2f5ff;
---panel:rgba(255,255,255,.82);
---line:rgba(60,80,130,.15);
---text:#11182c;
---muted:#66718b;
---accent:#6848ed;
---accent2:#00a98e;
---shadow:rgba(40,50,90,.13);
-color-scheme:light;
-}
-:root[data-theme="black"]{
---bg:#000;
---panel:rgba(20,20,25,.88);
---line:rgba(255,255,255,.12);
---text:#f5f5f5;
---muted:#999;
---accent:#805cff;
---accent2:#00d9b5;
---shadow:rgba(0,0,0,.8);
-color-scheme:dark;
-}
-*{box-sizing:border-box;margin:0;padding:0}
+*{margin:0;padding:0;box-sizing:border-box}
 body{
-min-height:100vh;
-min-height:100dvh;
-font-family:Inter,system-ui,sans-serif;
-background:var(--bg);
-color:var(--text);
-display:flex;
-flex-direction:column;
-overflow-x:hidden;
-transition:.3s;
+  min-height:100vh;
+  min-height:100dvh;
+  font-family:Arial,sans-serif;
+  background:#050914;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:22px;
+  overflow-x:hidden;
 }
-.background{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
-.background i{
-position:absolute;border-radius:50%;
-filter:blur(90px);opacity:.4;
-animation:float 18s infinite alternate;
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    linear-gradient(rgba(0,212,255,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,212,255,.035) 1px,transparent 1px);
+  background-size:35px 35px;
+  pointer-events:none;
 }
-.background i:nth-child(1){
-width:48vmax;height:48vmax;background:#593cff;
-left:-18vmax;top:-20vmax;
+.glow{
+  position:fixed;
+  width:280px;height:280px;
+  background:#0077ff;
+  filter:blur(130px);
+  opacity:.22;
+  top:5%;left:50%;
+  transform:translateX(-50%);
 }
-.background i:nth-child(2){
-width:40vmax;height:40vmax;background:#00c9ae;
-right:-15vmax;bottom:-20vmax;
+.container{
+  position:relative;
+  width:100%;
+  max-width:410px;
+  animation:appear .7s ease;
 }
-.background i:nth-child(3){
-width:28vmax;height:28vmax;background:#286aff;
-right:15vw;top:-12vmax;
+.brand{text-align:center;margin-bottom:28px}
+.logo{
+  width:78px;height:78px;
+  margin:0 auto 14px;
+  border-radius:25px;
+  display:grid;
+  place-items:center;
+  font-size:47px;
+  font-weight:900;
+  background:linear-gradient(135deg,#087cff,#00dfd0,#925bff);
+  box-shadow:0 0 35px #008cff45;
 }
-@keyframes float{to{transform:translate(6vmax,4vmax) scale(1.12)}}
-.grid-bg{
-position:fixed;inset:0;z-index:-1;pointer-events:none;
-background-image:
-linear-gradient(rgba(124,92,255,.055) 1px,transparent 1px),
-linear-gradient(90deg,rgba(124,92,255,.055) 1px,transparent 1px);
-background-size:55px 55px;
-mask-image:radial-gradient(ellipse at center,#000 10%,transparent 80%);
+.brand h1{
+  font-size:30px;
+  letter-spacing:4px;
+  background:linear-gradient(90deg,#fff,#00d9ff,#a98aff);
+  -webkit-background-clip:text;
+  color:transparent;
 }
-header{
-width:100%;max-width:1200px;margin:auto;
-padding:20px 25px;
-display:flex;justify-content:space-between;align-items:center;
+.brand p{color:#91a5c0;font-size:13px;margin-top:8px}
+.card{
+  background:rgba(13,25,47,.88);
+  border:1px solid rgba(0,212,255,.17);
+  border-radius:24px;
+  padding:25px 21px;
+  box-shadow:0 20px 60px #0007;
+  backdrop-filter:blur(18px);
 }
-.logo{display:flex;align-items:center;gap:12px;font-size:21px;font-weight:900}
-.logo-icon{
-width:44px;height:44px;border-radius:14px;
-display:grid;place-items:center;color:white;font-size:23px;
-background:linear-gradient(135deg,#7655ff,#09cdb5);
-box-shadow:0 8px 30px rgba(124,92,255,.4);
-}
-.logo span{color:var(--accent2)}
-.theme-btn{
-padding:11px 15px;border:1px solid var(--line);
-background:var(--panel);color:var(--text);
-border-radius:13px;cursor:pointer;font-weight:700;
-}
-main{
-flex:1;display:flex;align-items:center;justify-content:center;
-padding:30px 18px 50px;
-}
-.login-card{
-width:100%;max-width:440px;
-padding:32px;
-background:var(--panel);
-border:1px solid var(--line);
-border-radius:27px;
-backdrop-filter:blur(25px);
-box-shadow:0 35px 100px var(--shadow);
-animation:appear .8s ease both;
-}
-@keyframes appear{
-from{opacity:0;transform:translateY(25px)}
-to{opacity:1;transform:translateY(0)}
-}
-.login-icon{
-width:75px;height:75px;border-radius:23px;
-margin:0 auto 22px;
-display:grid;place-items:center;
-font-size:35px;
-background:linear-gradient(135deg,#7655ff,#09cdb5);
-box-shadow:0 10px 35px rgba(124,92,255,.35);
-}
-h1{text-align:center;font-size:29px;font-weight:900}
-.subtitle{
-text-align:center;color:var(--muted);
-font-size:13px;line-height:1.7;margin:12px 0 28px;
-}
-.field{margin-bottom:19px}
-.field label{
-display:block;font-size:13px;font-weight:750;margin-bottom:9px;
+.card h2{font-size:23px;margin-bottom:8px}
+.description{font-size:13px;color:#91a5c0;margin-bottom:25px}
+.field{margin-bottom:17px}
+label{
+  display:block;
+  font-size:12px;
+  color:#c1d0e5;
+  margin-bottom:9px;
 }
 .input-wrap{position:relative}
-.field input{
-width:100%;padding:16px 45px 16px 15px;
-border:1px solid var(--line);border-radius:13px;
-background:rgba(120,130,180,.07);
-color:var(--text);outline:none;font-size:14px;
-transition:.25s;
+input{
+  width:100%;
+  height:51px;
+  padding:0 14px;
+  border-radius:12px;
+  border:1px solid #263954;
+  outline:none;
+  background:#091426;
+  color:white;
+  font-size:16px;
 }
-.field input:focus{
-border-color:var(--accent);
-box-shadow:0 0 0 3px rgba(124,92,255,.12);
+input:focus{border-color:#00cfff;box-shadow:0 0 0 3px #00cfff15}
+.password{padding-right:55px}
+.eye{
+  position:absolute;
+  right:12px;top:50%;
+  transform:translateY(-50%);
+  border:0;background:none;
+  color:#00d9ff;
+  font-size:12px;
+  padding:10px;
 }
-.input-wrap .symbol{
-position:absolute;right:15px;top:50%;
-transform:translateY(-50%);color:var(--muted);
+.forgot{
+  display:block;
+  text-align:right;
+  margin:0 0 20px;
+  color:#00d9ff;
+  font-size:12px;
+  text-decoration:none;
 }
-.password-toggle{
-position:absolute;right:12px;top:50%;
-transform:translateY(-50%);
-border:0;background:none;color:var(--muted);
-font-size:17px;cursor:pointer;
+.btn{
+  width:100%;
+  height:52px;
+  border:0;
+  border-radius:13px;
+  background:linear-gradient(100deg,#087cff,#00cfc8);
+  color:white;
+  font-size:15px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 8px 25px #007bff30;
 }
-.options{
-display:flex;justify-content:space-between;
-align-items:center;gap:10px;margin:5px 0 24px;
-font-size:12px;color:var(--muted);
-}
-.remember{display:flex;align-items:center;gap:7px}
-.remember input{accent-color:var(--accent)}
-a{color:var(--accent2);text-decoration:none}
-.submit{
-width:100%;padding:17px;border:0;border-radius:14px;
-background:linear-gradient(110deg,#7655ff,#4f78ff 60%,#10c6b5);
-color:white;font-weight:850;font-size:15px;
-cursor:pointer;box-shadow:0 15px 35px rgba(95,92,255,.3);
-transition:.25s;
-}
-.submit:hover{transform:translateY(-3px)}
-.submit:disabled{opacity:.6;cursor:wait}
-.divider{
-display:flex;align-items:center;gap:12px;
-color:var(--muted);font-size:11px;margin:25px 0;
-}
-.divider:before,.divider:after{
-content:"";height:1px;background:var(--line);flex:1;
-}
-.register{text-align:center;font-size:13px;color:var(--muted)}
+.btn:disabled{opacity:.6}
 .message{
-display:none;margin-bottom:18px;padding:12px;
-border-radius:12px;font-size:12px;line-height:1.5;
+  display:none;
+  padding:12px;
+  border-radius:10px;
+  font-size:12px;
+  line-height:1.5;
+  margin-bottom:15px;
 }
-.message.error{display:block;background:rgba(255,70,90,.12);color:#ff8999}
-.message.success{display:block;background:rgba(18,214,180,.12);color:var(--accent2)}
-.back{
-display:block;text-align:center;margin-top:22px;
-font-size:12px;color:var(--muted);
+.error{display:block;background:#ff42421a;color:#ff8585;border:1px solid #ff424240}
+.success{display:block;background:#00d6a51a;color:#43e9bd;border:1px solid #00d6a540}
+.separator{
+  display:flex;align-items:center;gap:12px;
+  color:#71849e;font-size:11px;margin:22px 0;
 }
-footer{
-text-align:center;padding:20px;color:var(--muted);
-font-size:11px;border-top:1px solid var(--line);
+.separator:before,.separator:after{
+  content:"";height:1px;flex:1;background:#263954
 }
-footer strong{color:var(--accent2)}
-@media(max-width:450px){
-header{padding:16px}
-.login-card{padding:25px 20px}
-h1{font-size:26px}
-}
-@media(prefers-reduced-motion:reduce){
-*,*::before,*::after{animation:none!important;transition:none!important}
+.bottom{text-align:center;font-size:13px;color:#91a5c0}
+.bottom a{color:#00d9ff;text-decoration:none;font-weight:bold}
+footer{text-align:center;margin-top:24px;color:#60728c;font-size:11px;line-height:1.8}
+footer strong{color:#00d9ff}
+@keyframes appear{
+  from{opacity:0;transform:translateY(18px)}
+  to{opacity:1;transform:translateY(0)}
 }
 </style>
 </head>
 
 <body>
-<div class="background"><i></i><i></i><i></i></div>
-<div class="grid-bg"></div>
+<div class="glow"></div>
 
-<header>
-<div class="logo">
-<div class="logo-icon">G</div>
-GENES<span>IX</span>
-</div>
-<button class="theme-btn" id="themeBtn">🌙 Thème</button>
-</header>
+<main class="container">
 
-<main>
-<section class="login-card">
+  <header class="brand">
+    <div class="logo">G</div>
+    <h1>GENESIX</h1>
+    <p>Connecter les personnes, sans frontières.</p>
+  </header>
 
-<div class="login-icon">💬</div>
+  <section class="card">
+    <h2>Bon retour ! 👋</h2>
+    <p class="description">Connectez-vous pour retrouver vos conversations.</p>
 
-<h1>Bon retour !</h1>
-<p class="subtitle">
-Connectez-vous à votre compte GENESIX
-et retrouvez vos conversations.
-</p>
+    <div id="message" class="message" role="alert"></div>
 
-<div class="message" id="message"></div>
+    <form id="loginForm">
 
-<form id="loginForm">
+      <div class="field">
+        <label for="email">Adresse email</label>
+        <input id="email" type="email" placeholder="exemple@email.com"
+          autocomplete="email" required>
+      </div>
 
-<div class="field">
-<label for="email">Adresse e-mail</label>
-<div class="input-wrap">
-<input id="email" type="email"
-placeholder="exemple@email.com"
-autocomplete="email" required>
-<span class="symbol">✉</span>
-</div>
-</div>
+      <div class="field">
+        <label for="password">Mot de passe</label>
+        <div class="input-wrap">
+          <input id="password" class="password" type="password"
+            placeholder="Votre mot de passe"
+            autocomplete="current-password" required>
+          <button class="eye" type="button" id="togglePassword">VOIR</button>
+        </div>
+      </div>
 
-<div class="field">
-<label for="password">Mot de passe</label>
-<div class="input-wrap">
-<input id="password" type="password"
-placeholder="Votre mot de passe"
-autocomplete="current-password" required minlength="6">
-<button type="button" class="password-toggle"
-id="togglePassword">◉</button>
-</div>
-</div>
+      <a href="#" class="forgot" id="forgotPassword">
+        Mot de passe oublié ?
+      </a>
 
-<div class="options">
-<label class="remember">
-<input type="checkbox" id="remember" checked>
-Se souvenir de moi
-</label>
-<a href="forgot-password.html">Mot de passe oublié ?</a>
-</div>
+      <button class="btn" id="loginBtn" type="submit">
+        Se connecter →
+      </button>
 
-<button class="submit" type="submit" id="submitBtn">
-Se connecter　➜
-</button>
+    </form>
 
-</form>
+    <div class="separator">NOUVEAU SUR GENESIX ?</div>
 
-<div class="divider">NOUVEAU SUR GENESIX ?</div>
+    <p class="bottom">
+      Vous n'avez pas encore de compte ?
+      <a href="./register.html">Créer un compte</a>
+    </p>
+  </section>
 
-<p class="register">
-Pas encore de compte ?
-<a href="register.html">Créer un compte</a>
-</p>
+  <footer>
+    GENESIX — Messagerie nouvelle génération<br>
+    Créé par <strong>Jason Aloma 🇨🇩</strong><br>
+    Kinshasa · RDC
+  </footer>
 
-<a href="index.html" class="back">← Retour à l'accueil</a>
-
-</section>
 </main>
 
-<footer>
-© 2026 GENESIX · Créé par <strong>Jason Aloma 🇨🇩</strong>
-<br>Kinshasa · RDC
-</footer>
-
-<script>
-(function(){
-const root=document.documentElement;
-const btn=document.getElementById("themeBtn");
-const themes=["dark","white","black"];
-let current="dark";
-
-try{
-const saved=localStorage.getItem("genesix_theme");
-if(themes.includes(saved))current=saved;
-}catch(e){}
-
-function applyTheme(){
-root.setAttribute("data-theme",current==="dark"?"":current);
-btn.textContent=current==="white"?"☀️ Mode blanc":
-current==="black"?"⚫ Mode noir":"🌙 Mode bleu nuit";
-document.querySelector('meta[name="theme-color"]').content=
-current==="white"?"#f2f5ff":current==="black"?"#000000":"#050a1a";
-try{localStorage.setItem("genesix_theme",current)}catch(e){}
-}
-btn.addEventListener("click",()=>{
-current=themes[(themes.indexOf(current)+1)%themes.length];
-applyTheme();
-});
-applyTheme();
-})();
-
-const password=document.getElementById("password");
-document.getElementById("togglePassword").addEventListener("click",()=>{
-password.type=password.type==="password"?"text":"password";
-});
-</script>
-
-<!-- FIREBASE GENESIX - starlink-investit -->
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, setPersistence, browserLocalPersistence, browserSessionPersistence, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",
-  authDomain: "starlink-investit.firebaseapp.com",
-  databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com",
-  projectId: "starlink-investit",
-  storageBucket: "starlink-investit.firebasestorage.app",
-  messagingSenderId: "807081599583",
-  appId: "1:807081599583:web:e00ec3959bc4acdae031ea"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-// Si déjà connecté -> direct discussions
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    // On ne redirige pas tout de suite pour laisser voir la page,
-    // mais si l'utilisateur vient d'arriver, on le renvoie
-    if (sessionStorage.getItem("genesix_just_logged_out") !== "1") {
-      // Ne redirige que si on n'est pas en train de taper
-      // On laisse le form, mais on pré-remplit l'email
-      if (user.email) document.getElementById("email").value = user.email;
-    }
-  }
-});
+import {
+  auth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  sendPasswordResetEmail
+} from "./assets/js/firebase.js";
 
 const form = document.getElementById("loginForm");
 const message = document.getElementById("message");
+const loginBtn = document.getElementById("loginBtn");
+const password = document.getElementById("password");
 
-function showMsg(text, type) {
-  message.className = "message " + type;
-  message.textContent = text;
-  message.style.display = "block";
+function showMessage(text,type="error"){
+  message.textContent=text;
+  message.className="message "+type;
 }
 
-form.addEventListener("submit", async (e) => {
+onAuthStateChanged(auth,user=>{
+  if(user){
+    window.location.replace("./discussions.html");
+  }
+});
+
+document.getElementById("togglePassword").addEventListener("click",()=>{
+  const visible=password.type==="text";
+  password.type=visible?"password":"text";
+  document.getElementById("togglePassword").textContent=
+    visible?"VOIR":"CACHER";
+});
+
+form.addEventListener("submit",async e=>{
   e.preventDefault();
-  message.className = "message";
-  message.style.display = "none";
 
-  const email = document.getElementById("email").value.trim();
-  const pass = password.value;
-  const remember = document.getElementById("remember").checked;
-  const button = document.getElementById("submitBtn");
+  const email=document.getElementById("email").value.trim();
+  const pass=password.value;
 
-  if (!email || !pass) {
-    showMsg("Veuillez remplir tous les champs.", "error");
+  loginBtn.disabled=true;
+  loginBtn.textContent="Connexion en cours...";
+
+  try{
+    await signInWithEmailAndPassword(auth,email,pass);
+    showMessage("Connexion réussie !","success");
+    window.location.replace("./discussions.html");
+  }catch(error){
+    const errors={
+      "auth/invalid-email":"Adresse email invalide.",
+      "auth/invalid-credential":"Email ou mot de passe incorrect.",
+      "auth/user-not-found":"Aucun compte trouvé avec cet email.",
+      "auth/wrong-password":"Mot de passe incorrect.",
+      "auth/too-many-requests":"Trop de tentatives. Réessayez plus tard.",
+      "auth/network-request-failed":"Vérifiez votre connexion Internet."
+    };
+    showMessage(errors[error.code]||"Impossible de se connecter. Réessayez.");
+    loginBtn.disabled=false;
+    loginBtn.textContent="Se connecter →";
+  }
+});
+
+document.getElementById("forgotPassword").addEventListener("click",async e=>{
+  e.preventDefault();
+
+  const email=document.getElementById("email").value.trim();
+
+  if(!email){
+    showMessage("Entrez votre adresse email pour recevoir le lien de réinitialisation.");
     return;
   }
 
-  button.disabled = true;
-  button.textContent = "Connexion en cours...";
-
-  try {
-    // Se souvenir de moi : local = reste connecté, session = que pour cette session
-    await setPersistence(auth, remember ? browserLocalPersistence : browserSessionPersistence);
-
-    const cred = await signInWithEmailAndPassword(auth, email, pass);
-    const uid = cred.user.uid;
-
-    // Sauvegarde pour les autres pages
-    const token = await cred.user.getIdToken();
-    localStorage.setItem("genesix_token", token);
-    localStorage.setItem("genesix_uid", uid);
-    sessionStorage.removeItem("genesix_just_logged_out");
-
-    // Vérifie que le profil existe dans Firestore
-    const snap = await getDoc(doc(db, "users", uid));
-    const name = snap.exists() ? snap.data().name : cred.user.email;
-
-    showMsg("Bienvenue " + name + " ✅ Redirection...", "success");
-
-    setTimeout(() => {
-      location.href = "discussions.html";
-    }, 800);
-
-  } catch (err) {
-    let txt = err.message;
-    if (err.code === "auth/invalid-credential") txt = "Email ou mot de passe incorrect.";
-    if (err.code === "auth/user-not-found") txt = "Aucun compte avec cet email. Crée un compte.";
-    if (err.code === "auth/wrong-password") txt = "Mot de passe incorrect.";
-    if (err.code === "auth/too-many-requests") txt = "Trop de tentatives. Réessaie dans quelques minutes.";
-    if (err.code === "auth/invalid-email") txt = "Email invalide.";
-    showMsg(txt, "error");
-    button.disabled = false;
-    button.textContent = "Se connecter　➜";
+  try{
+    await sendPasswordResetEmail(auth,email);
+    showMessage("Si cette adresse correspond à un compte, un email de réinitialisation sera envoyé.","success");
+  }catch(error){
+    showMessage("Impossible d'envoyer le lien. Vérifiez votre adresse email.");
   }
 });
 </script>
+
 </body>
 </html>
